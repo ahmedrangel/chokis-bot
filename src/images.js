@@ -1,0 +1,2 @@
+export const guide = "https://cdn.discordapp.com/attachments/483139655181795351/1151082352227930213/chokiscomandos.png";
+export const avatar = "https://cdn.discordapp.com/attachments/483139655181795351/1151087594726240267/chinoItachi-avatar.png";
