@@ -5,3 +5,4 @@ export * from "./lol-profile.js";
 export * from "./video.js";
 export * from "./audio.js";
 export * from "./test.js";
+export * from "./lol-mmr.js";

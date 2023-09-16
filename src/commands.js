@@ -70,6 +70,39 @@ export const AUDIO = {
   ]
 };
 
+export const LOLMMR = {
+  cid: "",
+  name: "lolmmr",
+  description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas.",
+  options: [
+    {
+      "name": "invocador",
+      "description": "El nombre de invocador.",
+      "type": CommandType.STRING,
+      "required": true
+    },
+    {
+      "name": "servidor",
+      "description": "El servidor del invocador",
+      "type": CommandType.STRING,
+      "required": true,
+      "choices": LOL_SERVERS
+    },
+    {
+      "name": "cola",
+      "description": "Tipo de cola clasificatoria",
+      "type": CommandType.STRING,
+      "required": true,
+      "choices": [
+        {
+          "name": "Solo/Duo",
+          "value": "soloq"
+        }
+      ]
+    }
+  ]
+};
+
 /*
 export const TEST = {
   name: "test",
