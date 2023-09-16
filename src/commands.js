@@ -71,7 +71,7 @@ export const AUDIO = {
 };
 
 export const LOLMMR = {
-  cid: "",
+  cid: "1152746647172948038",
   name: "lolmmr",
   description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas.",
   options: [
