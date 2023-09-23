@@ -6,3 +6,4 @@ export * from "./video.js";
 export * from "./audio.js";
 export * from "./test.js";
 export * from "./lol-mmr.js";
+export * from "./lol-game.js";

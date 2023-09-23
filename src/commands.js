@@ -103,6 +103,27 @@ export const LOLMMR = {
   ]
 };
 
+export const LOLGAME = {
+  cid: "",
+  name: "lolgame",
+  description: "Obtener información de una partida activa de League of Legends.",
+  options: [
+    {
+      "name": "invocador",
+      "description": "El nombre de invocador.",
+      "type": CommandType.STRING,
+      "required": true
+    },
+    {
+      "name": "servidor",
+      "description": "El servidor del invocador",
+      "type": CommandType.STRING,
+      "required": true,
+      "choices": LOL_SERVERS
+    },
+  ]
+};
+
 /*
 export const TEST = {
   name: "test",

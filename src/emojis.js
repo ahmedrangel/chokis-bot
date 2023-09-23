@@ -38,7 +38,8 @@ const leagueEmblems = {
   diamond: "<:Diamante:1112621319754874951>",
   master: "<:Maestro:1112621326289600522>",
   grandmaster: "<:GranMaestro:1112621323789807677>",
-  challenger: "<:Retador:1112621316818862100>"
+  challenger: "<:Retador:1112621316818862100>",
+  unranked: "<:Unranked:1155128109981515786>"
 };
 
 export const getLolSpell = (number) => {
@@ -97,7 +98,7 @@ export const getLeagueEmblem = (league) => {
   case "RETADOR":
     return leagueEmblems.challenger;
   default:
-    return "";
+    return leagueEmblems.unranked;
   }
 };
 
