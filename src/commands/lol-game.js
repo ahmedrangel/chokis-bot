@@ -34,12 +34,12 @@ export const lolGame = (getValue, env, context, token) => {
       const avg1Emoji = getLeagueEmblem(gameData.team1.eloAvg.tierFull);
       const avg2Emoji = getLeagueEmblem(gameData.team2.eloAvg.tierFull);
       fields.push({
-        name: `🟦 AZUL・Avg: ${avg1Emoji} ${gameData.team1.eloAvg.rank}`,
+        name: `🟦 EQUIPO AZUL・Avg: ${avg1Emoji} ${gameData.team1.eloAvg.rank}`,
         value: team1.join("\n"),
         inline: false
       });
       fields.push({
-        name: `🟥 ROJO・Avg: ${avg2Emoji} ${gameData.team2.eloAvg.rank}`,
+        name: `🟥 EQUIPO ROJO・Avg: ${avg2Emoji} ${gameData.team2.eloAvg.rank}`,
         value: team2.join("\n"),
         inline: false
       });
