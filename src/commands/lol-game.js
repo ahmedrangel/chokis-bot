@@ -2,6 +2,7 @@ import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 import { deferReply, deferUpdate } from "../interaction";
 import { getLeagueEmblem, getLolSpell } from "../emojis";
 import { CONSTANTS } from "../constants.js";
+import { getDurationFromTimestampMMSS } from "../functions";
 const { COLOR } = CONSTANTS;
 
 const teamField = (p) => {
@@ -21,6 +22,7 @@ export const lolGame = (getValue, env, context, token) => {
     const gameFetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/live-game-for-discord?summoner=${summoner}&region=${region}`);
     const gameData = await gameFetch.json();
     if (gameData.status_code === 200) {
+      const gameDuration = getDurationFromTimestampMMSS(gameData.startTime);
       gameData.team1.participants.forEach((p) => {
         team1.push(teamField(p));
       });
@@ -41,7 +43,7 @@ export const lolGame = (getValue, env, context, token) => {
       });
       embeds.push({
         type: "rich",
-        title: `${gameData.gameType} (${gameData.region})`,
+        description: `**${gameData.gameType}**・**${gameData.region}**・*${gameDuration}*`,
         color: COLOR,
         fields: [...fields],
       });

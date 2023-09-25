@@ -71,3 +71,12 @@ export const errorEmbed = (error_msg) => {
   });
   return embeds;
 };
+
+export const getDurationFromTimestampMMSS = (timestamp) => {
+  const now = Date.now();
+  const difference = Math.floor((now - timestamp) / 1000); // in seconds
+  const minutes = Math.floor(difference / 60);
+  const seconds = difference % 60;
+  const format = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  return format;
+};
