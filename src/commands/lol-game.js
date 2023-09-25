@@ -7,7 +7,8 @@ const { COLOR } = CONSTANTS;
 const teamField = (p) => {
   const tierEmoji = getLeagueEmblem(p.tierFull);
   const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
-  const tierInfo = p.tier ? `**${p.rank}** (${p.lp}LP)・${p.wins}V-${p.losses}D (**${winrate}%**)` : "";
+  const rank = p.rank ? `**${p.rank}**` : "";
+  const tierInfo = p.tier ? `${rank} (${p.lp}LP)・${p.wins}V-${p.losses}D (**${winrate}%**)` : "";
   return `${p.summonerName}\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} ${tierInfo}`;
 };
 
