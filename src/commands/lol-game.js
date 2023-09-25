@@ -4,6 +4,13 @@ import { getLeagueEmblem, getLolSpell } from "../emojis";
 import { CONSTANTS } from "../constants.js";
 const { COLOR } = CONSTANTS;
 
+const teamField = (p) => {
+  const tierEmoji = getLeagueEmblem(p.tierFull);
+  const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
+  const tierInfo = p.tier ? `**${p.rank}** (${p.lp}LP)・${p.wins}V-${p.losses}D (**${winrate}%**)` : "";
+  return `${p.summonerName}\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} ${tierInfo}`;
+};
+
 export const lolGame = (getValue, env, context, token) => {
   const followUpRequest = async () => {
     const summoner = getValue("invocador");
@@ -14,22 +21,10 @@ export const lolGame = (getValue, env, context, token) => {
     const gameData = await gameFetch.json();
     if (gameData.status_code === 200) {
       gameData.team1.participants.forEach((p) => {
-        const tierEmoji = getLeagueEmblem(p.tierFull);
-        if (p.tier) {
-          const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
-          team1.push(`**${p.summonerName}**\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} **${p.rank}** (${p.lp}LP)・${p.wins}V - ${p.losses}D **(${winrate}%)**`);
-        } else {
-          team1.push(`**${p.summonerName}**\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji}`);
-        }
+        team1.push(teamField(p));
       });
       gameData.team2.participants.forEach((p) => {
-        const tierEmoji = getLeagueEmblem(p.tierFull);
-        if (p.tier) {
-          const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
-          team2.push(`**${p.summonerName}**\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} **${p.rank}** (${p.lp}LP)・${p.wins}V - ${p.losses}D **(${winrate}%)**`);
-        } else {
-          team2.push(`**${p.summonerName}**\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji}`);
-        }
+        team2.push(teamField(p));
       });
       const avg1Emoji = getLeagueEmblem(gameData.team1.eloAvg.tierFull);
       const avg2Emoji = getLeagueEmblem(gameData.team2.eloAvg.tierFull);
@@ -45,7 +40,7 @@ export const lolGame = (getValue, env, context, token) => {
       });
       embeds.push({
         type: "rich",
-        title: `${gameData.region} (${gameData.gameType})`,
+        title: `${gameData.gameType} (${gameData.region})`,
         color: COLOR,
         fields: [...fields],
       });
