@@ -15,7 +15,7 @@ export const lolGame = (getValue, env, context, token) => {
     if (gameData.status_code === 200) {
       gameData.team1.participants.forEach((p) => {
         const tierEmoji = getLeagueEmblem(p.tierFull);
-        if (p.tierFull && p.rank) {
+        if (p.tier) {
           const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
           team1.push(`**${p.summonerName}**\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} **${p.rank}** (${p.lp}LP)・${p.wins}V - ${p.losses}D **(${winrate}%)**`);
         } else {
@@ -24,7 +24,7 @@ export const lolGame = (getValue, env, context, token) => {
       });
       gameData.team2.participants.forEach((p) => {
         const tierEmoji = getLeagueEmblem(p.tierFull);
-        if (p.tierFull && p.rank) {
+        if (p.tier) {
           const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
           team2.push(`**${p.summonerName}**\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} **${p.rank}** (${p.lp}LP)・${p.wins}V - ${p.losses}D **(${winrate}%)**`);
         } else {
