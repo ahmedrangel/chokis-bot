@@ -104,7 +104,7 @@ export const LOLMMR = {
 };
 
 export const LOLGAME = {
-  cid: "",
+  cid: "1155113801109225542",
   name: "lolgame",
   description: "Obtener información de una partida activa de League of Legends.",
   options: [
