@@ -97,6 +97,10 @@ export const LOLMMR = {
         {
           "name": "Solo/Duo",
           "value": "soloq"
+        },
+        {
+          "name": "Flexible",
+          "value": "flex"
         }
       ]
     }
