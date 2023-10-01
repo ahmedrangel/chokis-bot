@@ -115,3 +115,12 @@ export const getSocial = (name) => {
   const key = name.toLowerCase();
   return key in socials ? socials[key] : "";
 };
+
+const leagueChests = {
+  chest: "<:chest:1158095399207317514>",
+  chestLocked: "<:chestLocked:1158097374477033503>"
+};
+
+export const getLeagueChest = (option) => {
+  return option ? leagueChests.chest : leagueChests.chestLocked;
+};
