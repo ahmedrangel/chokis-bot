@@ -96,11 +96,11 @@ export const LOLMMR = {
       "choices": [
         {
           "name": "Solo/Duo",
-          "value": "soloq"
+          "value": "SoloQ"
         },
         {
           "name": "Flexible",
-          "value": "flex"
+          "value": "Flex"
         }
       ]
     }
