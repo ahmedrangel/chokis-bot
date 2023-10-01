@@ -41,6 +41,10 @@ export const commandsHandler = async (req, env, context) => {
       case C.LOLGAME.name: {
         return cmd.lolGame(getValue, env, context, token);
       }
+      // comando /lolmaestrias
+      case C.LOLMASTERY.name: {
+        return cmd.lolMaestrias(getValue, env, context, token);
+      }
       // comando /video
       case C.VIDEO.name: {
         return cmd.video(getValue, env, context, token);

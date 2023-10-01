@@ -128,6 +128,27 @@ export const LOLGAME = {
   ]
 };
 
+export const LOLMASTERY = {
+  cid: "",
+  name: "lolmaestrias",
+  description: "Obtener las maestrías de campeones de un invocador.",
+  options: [
+    {
+      "name": "invocador",
+      "description": "El nombre de invocador.",
+      "type": CommandType.STRING,
+      "required": true
+    },
+    {
+      "name": "servidor",
+      "description": "El servidor del invocador",
+      "type": CommandType.STRING,
+      "required": true,
+      "choices": LOL_SERVERS
+    },
+  ]
+};
+
 /*
 export const TEST = {
   name: "test",

@@ -124,3 +124,18 @@ const leagueChests = {
 export const getLeagueChest = (option) => {
   return option ? leagueChests.chest : leagueChests.chestLocked;
 };
+
+const leagueMasteries = {
+  M7: "<:M7:1158108397644808284>",
+  M6: "<:M6:1158108740139094136>",
+  M5: "<:M5:1158109029546082366>",
+  M4: "<:M4:1158109241790451762>",
+  M3: "<:M3:1158109696830488636>",
+  M2: "<:M2:1158110458574807112>",
+  M1: "<:M1:1158110748271202374>"
+};
+
+export const getLeagueMastery = (level) => {
+  const masteryKey = "M" + level;
+  return leagueMasteries[masteryKey] || "";
+};
