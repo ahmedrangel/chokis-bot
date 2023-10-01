@@ -11,7 +11,7 @@ export const lolMMR = (getValue, env, context, token) => {
     const embeds = [];
     let mensaje = "";
     let footer;
-    const profile_fetch = await fetch(`https://dev.ahmedrangel.com/lol/elo-for-discord?summoner=${summoner}&region=${region}&type=${type}`);
+    const profile_fetch = await fetch(`https://dev.ahmedrangel.com/lol/elo-for-discord?summoner=${summoner}&region=${region}&type=${type.toLowerCase()}`);
     const profile_data = await profile_fetch.json();
     if (profile_data.status_code !== 404) {
       const queueName = profile_data.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
@@ -55,7 +55,7 @@ export const lolMMR = (getValue, env, context, token) => {
         errorName= "La **región** ingresada es incorrecta.";
         break;
       case "ranked":
-        errorName= "La cuenta es **unranked** en la cola especificada.";
+        errorName= `La cuenta es **unranked** en **${type}**`;
         break;
       }
       embeds.push({
