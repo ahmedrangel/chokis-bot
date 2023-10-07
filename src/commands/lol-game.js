@@ -43,7 +43,7 @@ export const lolGame = (getValue, env, context, token) => {
       });
       embeds.push({
         type: "rich",
-        description: `**${gameData.gameType}**・**${gameData.region}**・*${gameDuration}*`,
+        description: `**${gameData.gameType}**・**${gameData.region}**・🕓 *${gameDuration}*`,
         color: COLOR,
         fields: [...fields],
       });
