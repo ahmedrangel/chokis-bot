@@ -1,4 +1,4 @@
-import { avatar, guide } from "../images.js";
+import { avatar } from "../images.js";
 import { CONSTANTS } from "../constants.js";
 import { reply } from "../interaction.js";
 const { COLOR, BOT } = CONSTANTS;
@@ -20,15 +20,11 @@ export const comandos = (C) => {
 
   return reply(null, { embeds: [{
     title: "Lista de comandos disponibles",
-    description: `${list.join("")}` +
-                    "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
+    description: `${list.join("")}`,
     color: COLOR,
     author: {
       name: BOT,
       icon_url: avatar
-    },
-    image: {
-      url: guide
     },
     footer: {
       text: "Creado por Ahmed",
