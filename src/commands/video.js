@@ -28,14 +28,14 @@ export const video = (getValue, env, context, token) => {
       const scrapping = await fetch(scrappingUrl);
       const json_scrapped = await scrapping.json();
       const url_scrapped = red_social !== "YouTube"
-        ? json_scrapped.video_url
+        ? json_scrapped?.video_url
         : `${env.EXT_WORKER_YTDL}/ytdl?url=${encodedUrl}&filter=videoandaudio`;
-      const short_url = json_scrapped.short_url;
-      const status = json_scrapped.status;
+      const short_url = json_scrapped?.short_url;
+      const status = json_scrapped?.status;
       console.log(status);
       if (status === 200 && esUrl(url_scrapped)) {
         const sizeCheckerF = await fetch(url_scrapped);
-        const caption = "\n" + json_scrapped.caption.replace(/#[^\s#]+(\s#[^\s#]+)*$/, "").trim();
+        const caption = "\n" + `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/, "").trim() : ""}`;
         const blob = await sizeCheckerF.blob();
         const fileSize = blob.size;
         console.log("Tamaño: " + fileSize);
