@@ -129,7 +129,7 @@ export const LOLGAME = {
 };
 
 export const LOLMASTERY = {
-  cid: "",
+  cid: "1158149667759079444",
   name: "lolmaestrias",
   description: "Obtener las maestrías de campeones de un invocador.",
   options: [
