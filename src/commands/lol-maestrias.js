@@ -37,9 +37,17 @@ export const lolMaestrias = (getValue, env, context, token) => {
         }
       });
     } else {
+      let errorStr = "";
+      switch (masteries_data?.errorName) {
+      case "summoner":
+        errorStr = "No se ha encontrado el **nombre de invocador**.";
+        break;
+      case "mastery":
+        errorStr = "No se ha podido obtener las **maestrías** de este invocador.";
+      }
       embeds.push({
         color: COLOR,
-        description: ":x: No se ha encontrado el **nombre de invocador**."
+        description: ":x:" + errorStr,
       });
     }
     return deferUpdate(mensaje, {
