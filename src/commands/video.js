@@ -9,7 +9,7 @@ export const video = (getValue, env, context, token) => {
     let mensaje, emoji;
     let embeds = [], files = [], button = [], components = [];
     let supported = false;
-    let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube";
+    let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch";
     const url = getValue("link");
     for (const key in supportedSocials) {
       const sns = supportedSocials[key];
@@ -39,7 +39,7 @@ export const video = (getValue, env, context, token) => {
         const blob = await sizeCheckerF.blob();
         const fileSize = blob.size;
         console.log("Tamaño: " + fileSize);
-        if (fileSize < 25000000) {
+        if (fileSize < 50000000) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
           const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
           const url_uploaded = await upload.text();

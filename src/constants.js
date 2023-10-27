@@ -90,5 +90,9 @@ export const supportedSocials = {
   youtube: {
     domains: ["youtube.com/shorts", "youtu.be/", "youtube.com/watch?v="],
     name: "YouTube"
+  },
+  twitch: {
+    domains: ["clips.twitch.tv/", "twitch.tv/"],
+    name: "Twitch"
   }
 };

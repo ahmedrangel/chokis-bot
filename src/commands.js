@@ -45,11 +45,11 @@ export const LOLPROFILE = {
 export const VIDEO = {
   cid: "1151073208997531674",
   name: "video",
-  description: "Obtener un video de Instagram, Facebook, TikTok, Twitter o YouTube en formato MP4.",
+  description: "Obtener un video de Instagram, Facebook, TikTok, Twitter, YouTube o Clip de Twitch en formato MP4.",
   options: [
     {
       "name": "link",
-      "description": "Link de Instagram, Facebook, TikTok, Twitter o YouTube.",
+      "description": "Link de Instagram, Facebook, TikTok, Twitter, YouTube o Twitch.",
       "type": CommandType.STRING,
       "required": true
     }
