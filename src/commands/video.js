@@ -35,7 +35,7 @@ export const video = (getValue, env, context, token) => {
       console.log(status);
       if (status === 200 && esUrl(url_scrapped)) {
         const sizeCheckerF = await fetch(url_scrapped);
-        const caption = "\n" + `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/, "").trim() : ""}`;
+        const caption = `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/, "").trim() : ""}`;
         const blob = await sizeCheckerF.blob();
         const fileSize = blob.size;
         console.log("Tamaño: " + fileSize);
@@ -58,7 +58,7 @@ export const video = (getValue, env, context, token) => {
             type: MessageComponentTypes.ACTION_ROW,
             components: button
           });
-          mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)${caption}`;
+          mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
         } else {
           const error = ":x: Error. El video es muy pesado o demasiado largo.";
           embeds = errorEmbed(error);
