@@ -58,7 +58,7 @@ export const video = (getValue, env, context, token) => {
             type: MessageComponentTypes.ACTION_ROW,
             components: button
           });
-          mensaje = `${emoji} **${red_social}**: <${short_url}>${caption}`;
+          mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)${caption}`;
         } else {
           const error = ":x: Error. El video es muy pesado o demasiado largo.";
           embeds = errorEmbed(error);
