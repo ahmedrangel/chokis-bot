@@ -35,7 +35,7 @@ export const video = (getValue, env, context, token) => {
       console.log(status);
       if (status === 200 && esUrl(url_scrapped)) {
         const sizeCheckerF = await fetch(url_scrapped);
-        const caption = `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/, "").trim() : ""}`;
+        const caption = `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g,"").trim() : ""}`;
         const blob = await sizeCheckerF.blob();
         const fileSize = blob.size;
         console.log("Tamaño: " + fileSize);
