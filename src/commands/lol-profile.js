@@ -13,6 +13,7 @@ export const lolProfile = (getValue, env, context, token) => {
     let button = [];
     let mensaje = "";
     let remake, footer, titleName;
+
     const profile_fetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/profile-for-discord?summoner=${summoner}&region=${region}`);
     const profile_data = await profile_fetch.json();
     if (profile_data.status_code !== 404) {
@@ -54,11 +55,11 @@ export const lolProfile = (getValue, env, context, token) => {
 
       profile_data.matchesHistory.forEach((match) => {
         let resultado;
-        if (match.remake == "true") {
+        if (match.remake) {
           resultado = "⬜";
           remake = true;
         } else {
-          resultado = match.win === "true" ? "🟦" : "🟥";
+          resultado = match.win ? "🟦" : "🟥";
         }
         const championName = match.championName.replaceAll(" ", "");
         const k = match.kills;
@@ -75,7 +76,7 @@ export const lolProfile = (getValue, env, context, token) => {
         value: history.join("\n"),
         inline: false
       });
-      if (remake == true) {
+      if (remake) {
         footer = "🟦 = victoriaㅤ🟥 = derrotaㅤ⬜ = remake";
       } else {
         footer = "🟦 = victoriaㅤ🟥 = derrota";
