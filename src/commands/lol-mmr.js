@@ -11,7 +11,7 @@ export const lolMMR = (getValue, env, context, token) => {
     const embeds = [];
     let mensaje = "";
     let footer;
-    const profile_fetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/elo-for-discord?summoner=${summoner}&region=${region}&type=${type.toLowerCase()}`);
+    const profile_fetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/elo-for-discord?summoner=${summoner}&region=${region}&type=${type}`);
     const profile_data = await profile_fetch.json();
     if (profile_data.status_code !== 404) {
       const queueName = profile_data.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
