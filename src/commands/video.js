@@ -24,7 +24,7 @@ export const video = (getValue, env, context, token) => {
       const encodedUrl = encodeURIComponent(url);
       const scrappingUrl = red_social !== "YouTube"
         ? `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper?url=${encodedUrl}`
-        : `${env.EXT_WORKER_YTDL}/yt-info?url=${encodedUrl}`;
+        : `${env.EXT_WORKER_AHMED}/dc/yt-info?url=${encodedUrl}`;
       const scrapping = await fetch(scrappingUrl);
       const json_scrapped = await scrapping.json();
       const url_scrapped = red_social !== "YouTube"
@@ -34,12 +34,24 @@ export const video = (getValue, env, context, token) => {
       const status = json_scrapped?.status;
       console.log(status);
       if (status === 200 && esUrl(url_scrapped)) {
-        const sizeCheckerF = await fetch(url_scrapped);
-        const caption = `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g,"").trim() : ""}`;
-        const blob = await sizeCheckerF.blob();
-        const fileSize = blob.size;
-        console.log("Tamaño: " + fileSize);
-        if (fileSize < 50000000) {
+        let retryCount = 0;
+        const fetchScraped = async() => {
+          const sizeCheckerF = await fetch(url_scrapped);
+          const caption = `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g,"").trim() : ""}`;
+          const blob = await sizeCheckerF.blob();
+          const fileSize = blob.size;
+          console.log("Tamaño: " + fileSize);
+          return {blob: blob, fileSize: fileSize, caption: caption};
+        };
+        let {blob, fileSize, caption} = await fetchScraped();
+        while (fileSize === 0 && retryCount < 3) {
+          console.log("El tamaño del archivo es 0. Volviendo a intentar...");
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          ({ blob, fileSize, caption } = await fetchScraped());
+          retryCount++;
+          console.log("Intento: " + retryCount);
+        }
+        if (fileSize > 0 && fileSize < 50000000) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
           const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
           const url_uploaded = await upload.text();
@@ -59,6 +71,9 @@ export const video = (getValue, env, context, token) => {
             components: button
           });
           mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
+        } else if (retryCount === 3) {
+          const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+          embeds = errorEmbed(error);
         } else {
           const error = ":x: Error. El video es muy pesado o demasiado largo.";
           embeds = errorEmbed(error);
