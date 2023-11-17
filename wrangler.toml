@@ -1,5 +1,4 @@
 name = "chokis"
 main = "src/worker.js"
 compatibility_date = "2023-09-12"
-usage_model = "bundled"
 env = { }
