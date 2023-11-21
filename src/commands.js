@@ -24,17 +24,17 @@ export const COMANDOS = {
 export const LOLPROFILE = {
   cid: "1151083208264388628",
   name: "lolperfil",
-  description: "Consultar información de un invocador de League of Legends",
+  description: "Consulta información de un usuario de League of Legends",
   options: [
     {
-      "name": "invocador",
-      "description": "El nombre de invocador.",
+      "name": "riot_id",
+      "description": "Riot ID. Ej: (Name#TAG).",
       "type": CommandType.STRING,
       "required": true
     },
     {
       "name": "servidor",
-      "description": "El servidor del invocador",
+      "description": "El servidor donde juega.",
       "type": CommandType.STRING,
       "required": true,
       "choices": LOL_SERVERS
@@ -76,8 +76,8 @@ export const LOLMMR = {
   description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas.",
   options: [
     {
-      "name": "invocador",
-      "description": "El nombre de invocador.",
+      "name": "riot_id",
+      "description": "Riot ID. Ej: (Name#TAG).",
       "type": CommandType.STRING,
       "required": true
     },
@@ -134,8 +134,8 @@ export const LOLMASTERY = {
   description: "Obtener las maestrías de campeones de un invocador.",
   options: [
     {
-      "name": "invocador",
-      "description": "El nombre de invocador.",
+      "name": "riot_id",
+      "description": "Riot ID. Ej: (Name#TAG).",
       "type": CommandType.STRING,
       "required": true
     },
@@ -145,7 +145,7 @@ export const LOLMASTERY = {
       "type": CommandType.STRING,
       "required": true,
       "choices": LOL_SERVERS
-    },
+    }
   ]
 };
 

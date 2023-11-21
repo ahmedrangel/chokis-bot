@@ -5,14 +5,24 @@ const { COLOR } = CONSTANTS;
 
 export const lolMaestrias = (getValue, env, context, token) => {
   const followUpRequest = async () => {
-    const summoner = getValue("invocador");
+    const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
     const region = getValue("servidor");
+    const riotName = riotId[0];
+    const riotTag = riotId[1];
+    if (!riotTag || !riotName) {
+      return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+        embeds: [{
+          color: COLOR,
+          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+        }]
+      });
+    }
     const embeds = [], fields = [], masteries = [];
     let mensaje = "";
-    const masteries_fetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/masteries-for-discord?summoner=${summoner}&region=${region}`);
-    const masteries_data = await masteries_fetch.json();
-    if (masteries_data.status_code !== 404) {
-      masteries_data.masteries.forEach(m => {
+    const masteriesF = await fetch(`${env.EXT_WORKER_AHMED}/lol/masteries/${region}/${riotName}/${riotTag}`);
+    const masteriesData = await masteriesF.json();
+    if (masteriesData.status_code !== 404) {
+      masteriesData.masteries.forEach(m => {
         const masteryEmoji = getLeagueMastery(m.level);
         const chest = getLeagueChest(m.chestGranted);
         masteries.push(`${masteryEmoji} ${m.championName}・${m.points.toLocaleString()} pts. ${chest} ${m.chestGranted ? "✅" : ""} *hace ${m.usadoHace}*`);
@@ -24,13 +34,13 @@ export const lolMaestrias = (getValue, env, context, token) => {
       });
       embeds.push({
         type: "rich",
-        title: masteries_data.region.toUpperCase(),
-        description: `**Puntuación Total:** ${masteries_data.score}`,
+        title: masteriesData.region.toUpperCase(),
+        description: `**Puntuación Total:** ${masteriesData.score}`,
         color: COLOR,
         fields: [...fields],
         author: {
-          name: masteries_data.summonerName,
-          icon_url: masteries_data.profileIconUrl
+          name:`${masteriesData.riotName} #${masteriesData.riotTag}`,
+          icon_url: masteriesData.profileIconUrl
         },
         footer: {
           text: "maestría - campeón - puntos - cofre - usado por última vez",
@@ -38,9 +48,9 @@ export const lolMaestrias = (getValue, env, context, token) => {
       });
     } else {
       let errorStr = "";
-      switch (masteries_data?.errorName) {
-      case "summoner":
-        errorStr = "No se ha encontrado el **nombre de invocador**.";
+      switch (masteriesData?.errorName) {
+      case "riotId":
+        errorStr = "No se ha encontrado el **Riot ID**.";
         break;
       case "mastery":
         errorStr = "No se ha podido obtener las **maestrías** de este invocador.";

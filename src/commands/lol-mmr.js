@@ -5,40 +5,50 @@ const { COLOR } = CONSTANTS;
 
 export const lolMMR = (getValue, env, context, token) => {
   const followUpRequest = async () => {
-    const summoner = getValue("invocador");
+    const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
     const region = getValue("servidor");
-    const type = getValue("cola");
+    const queue = getValue("cola");
+    const riotName = riotId[0];
+    const riotTag = riotId[1];
+    if (!riotTag || !riotName) {
+      return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+        embeds: [{
+          color: COLOR,
+          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+        }]
+      });
+    }
     const embeds = [];
     let mensaje = "";
     let footer;
-    const profile_fetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/elo-for-discord?summoner=${summoner}&region=${region}&type=${type}`);
-    const profile_data = await profile_fetch.json();
-    if (profile_data.status_code !== 404) {
-      const queueName = profile_data.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
-      const tierEmoji = getLeagueEmblem(profile_data.ranked.tier);
-      const avgTierEmoji = getLeagueEmblem(profile_data.avg.tier);
-      const wins = profile_data.ranked.wins;
-      const losses = profile_data.ranked.losses;
+    const profileF = await fetch(`${env.EXT_WORKER_AHMED}/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
+    const profile = await profileF.json();
+    if (profile.status_code !== 404) {
+      const queueName = profile.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
+      const tierEmoji = getLeagueEmblem(profile?.ranked?.tier);
+      const avgTierEmoji = getLeagueEmblem(profile?.avg?.tier);
+      const wins = profile?.ranked.wins;
+      const losses = profile?.ranked.losses;
       const winrate = Math.round((wins/(wins + losses))*100);
       embeds.push({
         type: "rich",
-        title: profile_data.region,
+        title: profile?.region.toUpperCase(),
         color: COLOR,
         fields: [
           {
-            name: `${queueName}: ${tierEmoji} ${profile_data.ranked.tier} ${profile_data.ranked.rank}`,
-            value: `${profile_data.ranked.leaguePoints} LP・${wins}V - ${losses}D **(${winrate}% WR)**`,
+            name: `${queueName}: ${tierEmoji} ${profile?.ranked?.tier.toUpperCase()} ${profile?.ranked?.rank}`,
+            value: `${profile?.ranked?.leaguePoints} LP・${wins}V - ${losses}D **(${winrate}% WR)**`,
             inline: false
           },
           {
-            name: `ELO MMR aproximado: ${avgTierEmoji} ${profile_data.avg.tier} ${profile_data.avg.rank}`,
+            name: `ELO MMR aproximado: ${avgTierEmoji} ${profile?.avg?.tier.toUpperCase()} ${profile?.avg?.rank}`,
             value: "",
             inline: false,
           }
         ],
         author: {
-          name: profile_data.summonerName,
-          icon_url: profile_data.profileIconUrl
+          name: `${profile?.riotName} #${profile?.riotTag}`,
+          icon_url: profile?.profileIconUrl
         },
         footer: {
           text: footer,
@@ -47,15 +57,15 @@ export const lolMMR = (getValue, env, context, token) => {
       });
     } else {
       let errorName;
-      switch(profile_data.errorName) {
-      case "summoner":
-        errorName = "No se ha encontrado el **nombre de invocador**.";
+      switch(profile?.errorName) {
+      case "riotId":
+        errorName = "No se ha encontrado el **Riot ID**.";
         break;
       case "region":
         errorName= "La **región** ingresada es incorrecta.";
         break;
       case "ranked":
-        errorName= `La cuenta es **unranked** en **${type}**`;
+        errorName= `La cuenta es **unranked** en **${queue}**`;
         break;
       }
       embeds.push({

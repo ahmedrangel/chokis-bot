@@ -76,26 +76,26 @@ export const getLolSpell = (number) => {
 };
 
 export const getLeagueEmblem = (league) => {
-  switch (league) {
-  case "HIERRO":
+  switch (league?.toLowerCase()) {
+  case "hierro":
     return leagueEmblems.iron;
-  case "BRONCE":
+  case "bronce":
     return leagueEmblems.bronce;
-  case "PLATA":
+  case "plata":
     return leagueEmblems.silver;
-  case "ORO":
+  case "oro":
     return leagueEmblems.gold;
-  case "PLATINO":
+  case "platino":
     return leagueEmblems.platinum;
-  case "ESMERALDA":
+  case "esmeralda":
     return leagueEmblems.emerald;
-  case "DIAMANTE":
+  case "diamante":
     return leagueEmblems.diamond;
-  case "MAESTRO":
+  case "maestro":
     return leagueEmblems.master;
-  case "GRAN MAESTRO":
+  case "gran maestro":
     return leagueEmblems.grandmaster;
-  case "RETADOR":
+  case "retador":
     return leagueEmblems.challenger;
   default:
     return leagueEmblems.unranked;

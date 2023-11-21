@@ -37,15 +37,6 @@ export const validarFecha = (dia, mes) => {
   return fecha.getDate() === dia && fecha.getMonth() === mes - 1 && fecha.getFullYear() === año; // true o false
 };
 
-export const obtenerNombreMes = (value) => {
-  for (const month of MONTHS) {
-    if (month.value === value) {
-      return month.name;
-    }
-  }
-  return null;
-};
-
 export const diasFaltantes = (año, mes, dia) => {
   const fechaActual = new Date(new Date() -300 * 60000); // GMT -5
   const fechaObjetivo = new Date(año, mes - 1, dia);
