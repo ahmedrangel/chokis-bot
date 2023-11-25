@@ -74,3 +74,8 @@ export const getDurationFromTimestampMMSS = (timestamp) => {
   }
   return "00:00";
 };
+
+export const imbedUrlsFromString = (str) => {
+  const regex = /(https?:\/\/[^\s]+)/g;
+  return str.replace(regex, "<$1>");
+};

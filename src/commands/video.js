@@ -1,5 +1,5 @@
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
-import { errorEmbed, esUrl, obtenerIDDesdeURL } from "../functions";
+import { errorEmbed, esUrl, imbedUrlsFromString, obtenerIDDesdeURL } from "../functions";
 import { deferReply, deferUpdate } from "../interaction";
 import { getSocial } from "../emojis";
 import { supportedSocials } from "../constants";
@@ -41,7 +41,7 @@ export const video = (getValue, env, context, token) => {
           const blob = await sizeCheckerF.blob();
           const fileSize = blob.size;
           console.log("Tamaño: " + fileSize);
-          return {blob: blob, fileSize: fileSize, caption: caption};
+          return {blob: blob, fileSize: fileSize, caption: imbedUrlsFromString(caption)};
         };
         let {blob, fileSize, caption} = await fetchScraped();
         while (fileSize === 0 && retryCount < 3) {
