@@ -1,8 +1,8 @@
-import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 import { errorEmbed, esUrl, imbedUrlsFromString, obtenerIDDesdeURL } from "../functions";
 import { deferReply, deferUpdate } from "../interaction";
 import { getSocial } from "../emojis";
 import { supportedSocials } from "../constants";
+import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 
 export const video = (getValue, env, context, token) => {
   const followUpRequest = async () => {
@@ -52,7 +52,10 @@ export const video = (getValue, env, context, token) => {
           console.log("Intento: " + retryCount);
         }
         if (fileSize > 0 && fileSize < 50000000) {
-          const urlId = obtenerIDDesdeURL(short_url);
+          const encodedScrappedUrl = encodeURIComponent(url_scrapped);
+          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-gemi-chan?video_url=${encodedScrappedUrl}`);
+          const url_uploaded = await upload.text();
+          const urlId = obtenerIDDesdeURL(url_uploaded);
           files.push({
             name: `${urlId}.mp4`,
             file: blob
@@ -61,7 +64,7 @@ export const video = (getValue, env, context, token) => {
             type: MessageComponentTypes.BUTTON,
             style: ButtonStyleTypes.LINK,
             label: "Descargar MP4",
-            url: url_scrapped
+            url: url_uploaded
           });
           components.push ({
             type: MessageComponentTypes.ACTION_ROW,
