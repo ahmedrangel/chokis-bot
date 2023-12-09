@@ -53,9 +53,13 @@ export const commandsHandler = async (req, env, context) => {
       case C.AUDIO.name: {
         return cmd.audio(getValue, env, context, token);
       }
-      // comando /test
-      case C.TEST.name: {
-        return cmd.test(env, context, token);
+      // comando /sorteo
+      case C.SORTEO.name: {
+        return cmd.sorteo(env, context, request_data);
+      }
+      // comando /participar (en sorteo)
+      case C.PARTICIPAR.name: {
+        return cmd.participar(env, context, request_data);
       }
       default:
         return error("Unknown Type", 400);

@@ -149,6 +149,35 @@ export const LOLMASTERY = {
   ]
 };
 
+export const SORTEO = {
+  cid: "",
+  name: "sorteo",
+  description: "Administrar sorteos.",
+  options: [
+    {
+      "name": "nuevo",
+      "description": "Abre un nuevo sorteo.",
+      "type": CommandType.SUB_COMMAND,
+    },
+    {
+      "name": "cerrar",
+      "description": "Cierra las entradas al sorteo.",
+      "type": CommandType.SUB_COMMAND,
+    },
+    {
+      "name": "sacar",
+      "description": "Saca un ganador aleatorio del sorteo.",
+      "type": CommandType.SUB_COMMAND,
+    },
+  ]
+};
+
+export const PARTICIPAR = {
+  cid: "1182847179249963010",
+  name: "participar",
+  description: "Entras a participar a un sorteo activo.",
+};
+
 /*
 export const TEST = {
   name: "test",
@@ -160,5 +189,6 @@ export const TEST = {
       "type": CommandType.STRING,
       "required": true
     }
-  ]
-};*/
+  ],
+};
+*/

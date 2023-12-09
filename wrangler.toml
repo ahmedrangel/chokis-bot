@@ -2,3 +2,8 @@ name = "chokis"
 main = "src/worker.js"
 compatibility_date = "2023-09-12"
 env = { }
+
+[[d1_databases]]
+binding = "CHOKISDB"
+database_name = "chokis"
+database_id = "08652e7a-8feb-438f-98b9-4a4926109da5"

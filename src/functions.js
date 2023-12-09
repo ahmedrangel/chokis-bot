@@ -79,3 +79,17 @@ export const imbedUrlsFromString = (str) => {
   const regex = /(https?:\/\/[^\s]+)/g;
   return str.replace(regex, "<$1>");
 };
+
+export const getAvatarExtension = async (userId, avatar) => {
+  const url = `https://cdn.discordapp.com/avatars/${userId}/${avatar}?size=16`;
+  const response = await fetch(url);
+  const contentType = response.headers.get("content-type");
+  const extensionMap = {
+    "image/gif": "gif",
+    "image/png": "png",
+    "image/jpeg": "jpg",
+    "image/webp": "webp"
+  };
+  const extension = extensionMap[contentType];
+  return extension;
+};
