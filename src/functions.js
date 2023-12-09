@@ -80,16 +80,28 @@ export const imbedUrlsFromString = (str) => {
   return str.replace(regex, "<$1>");
 };
 
-export const getAvatarExtension = async (userId, avatar) => {
-  const url = `https://cdn.discordapp.com/avatars/${userId}/${avatar}?size=16`;
-  const response = await fetch(url);
-  const contentType = response.headers.get("content-type");
+export const getExtensionFromResponse = (response) => {
   const extensionMap = {
     "image/gif": "gif",
     "image/png": "png",
     "image/jpeg": "jpg",
     "image/webp": "webp"
   };
+  const contentType = response.headers.get("content-type");
   const extension = extensionMap[contentType];
   return extension;
+};
+
+export const getUpdatedAvatarUrl = async (userId, avatar, token) => {
+  const response = await fetch(`https://cdn.discordapp.com/avatars/${userId}/${avatar}?size=16`);
+  if (!response.ok) {
+    const user = await fetchUsers(userId, token);
+    const response = await fetch(`https://cdn.discordapp.com/avatars/${userId}/${user.avatar}?size=16`);
+    const extension = getExtensionFromResponse(response);
+    const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.${extension}?size=2048`;
+    return avatarUrl;
+  }
+  const extension = getExtensionFromResponse(response);
+  const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatar}.${extension}?size=2048`;
+  return avatarUrl;
 };

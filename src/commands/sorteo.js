@@ -1,7 +1,7 @@
 import { deferReply, deferUpdate } from "../interaction";
 import { CONSTANTS } from "../constants.js";
 import { PARTICIPAR } from "../commands.js";
-import { getAvatarExtension, getRandom } from "../functions.js";
+import { getUpdatedAvatarUrl, getRandom } from "../functions.js";
 const { COLOR } = CONSTANTS;
 export const sorteo = (env, context, request_data) => {
   const { guild_id, token, data } = request_data;
@@ -9,6 +9,7 @@ export const sorteo = (env, context, request_data) => {
   const followUpRequest = async () => {
     let description, title, winnerArr;
     if (option.name === "nuevo") {
+      // nuevo
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       if (!select?.activeGiveaway) {
         title = "🎁 ¡Sorteo abierto! 📢";
@@ -25,6 +26,7 @@ export const sorteo = (env, context, request_data) => {
         embeds: embeds
       });
     } else if (option.name === "cerrar") {
+      // cerrar
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       if (select.activeGiveaway) {
         title = "🛑 ¡Sorteo cerrado! 📢";
@@ -40,6 +42,7 @@ export const sorteo = (env, context, request_data) => {
         embeds: embeds
       });
     } else if (option.name === "sacar") {
+      // sacar
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       const giveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}'`).all();
       const participants = giveaways.results;
@@ -49,7 +52,7 @@ export const sorteo = (env, context, request_data) => {
         winnerArr = winner;
         console.log(random, winner);
         title = "🏆 ¡Hay un ganador! 📢";
-        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. ¡Felicidades!\nTotal de participantes: ${participants.length}`;
+        description = `🪄 <@${winner.participantId}> (@${winner.participantName}) ha salido como **ganador** del sorteo. ¡Felicidades!\nTotal de participantes: ${participants.length}`;
       } else if (select?.activeGiveaway && participants[0]) {
         description = "⚠️ Cierra el sorteo activo primero para sacar un ganador.";
       } else if (select?.activeGiveaway && !participants[0]) {
@@ -57,14 +60,13 @@ export const sorteo = (env, context, request_data) => {
       } else {
         description = "❌ No hay ningún sorteo activo para sacar un ganador.";
       }
-      const extension = await getAvatarExtension(winnerArr?.participantId, winnerArr?.participantAvatar);
-      console.log(extension);
+      const avatarUrl = await getUpdatedAvatarUrl(winnerArr?.participantId, winnerArr?.participantAvatar, env.DISCORD_TOKEN);
       const embeds = [{
         color: COLOR,
         title: title,
         description: description,
         image: {
-          url: `https://cdn.discordapp.com/avatars/${winnerArr?.participantId}/${winnerArr?.participantAvatar}.${extension}?size=2048`,
+          url: avatarUrl,
         }
       }];
       return deferUpdate("", {
