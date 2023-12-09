@@ -16,7 +16,7 @@ export const participar = (env, context, request_data) => {
       title = "✅ ¡Has entrado al sorteo!";
       description = "🤞 Ya estás participando en el torneo. Buena suerte!";
     } else if (selectGuilds?.activeGiveaway && selectGiveaways) {
-      description = "⚠️ Ya estás participando en el sorteo.";
+      description = "⚠️ Ya estás participando en el sorteo. Espera que el moderador anuncie el ganador.";
     } else {
       description = "❌ No hay ningún sorteo activo para participar.";
     }
