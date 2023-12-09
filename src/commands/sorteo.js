@@ -49,7 +49,7 @@ export const sorteo = (env, context, request_data) => {
         winnerArr = winner;
         console.log(random, winner);
         title = "🏆 ¡Hay un ganador! 📢";
-        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. ¡Felicidades!\nTotal de participantes: ${participants.length}.`;
+        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. ¡Felicidades!\nTotal de participantes: ${participants.length}`;
       } else if (select?.activeGiveaway && participants[0]) {
         description = "⚠️ Cierra el sorteo activo primero para sacar un ganador.";
       } else if (select?.activeGiveaway && !participants[0]) {
