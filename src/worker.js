@@ -3,7 +3,6 @@
  */
 import { Router } from "itty-router";
 import { verifyKey } from "./lib/discord.js";
-import { fetchUsers } from "./functions.js";
 import { commandsHandler } from "./handler.js";
 
 const router = Router();
