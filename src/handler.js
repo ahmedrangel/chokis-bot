@@ -59,7 +59,7 @@ export const commandsHandler = async (req, env, context) => {
       }
       // comando /participar (en sorteo)
       case C.PARTICIPAR.name: {
-        return cmd.participar(env, context, request_data);
+        return cmd.participar(env, request_data);
       }
       default:
         return error("Unknown Type", 400);
