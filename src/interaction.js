@@ -95,7 +95,7 @@ export const deferReply = (options) => {
   return toDiscord({
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
-      flags:options?.flags
+      flags: options?.flags
     }
   });
 };
