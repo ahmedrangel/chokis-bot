@@ -15,6 +15,7 @@ export const commandsHandler = async (req, env, context) => {
   } else {
     const { type, data, member, token } = request_data;
     const { name, options, resolved } = data;
+    console.log("/" + name);
     return create(type, options, async ({ getValue = (name) => name }) => {
       switch (name) {
       // comando /memide
