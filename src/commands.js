@@ -150,7 +150,7 @@ export const LOLMASTERY = {
 };
 
 export const SORTEO = {
-  cid: "",
+  cid: "1182846437424365700",
   name: "sorteo",
   description: "Administrar sorteos.",
   options: [
@@ -177,6 +177,7 @@ export const PARTICIPAR = {
   cid: "1182847179249963010",
   name: "participar",
   description: "Entras a participar a un sorteo activo.",
+  options: []
 };
 
 /*
