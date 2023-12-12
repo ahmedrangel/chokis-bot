@@ -1,4 +1,4 @@
-import { CommandType } from "./lib/discord.js";
+import { CommandType, PermissionFlag } from "./lib/discord.js";
 import { LOL_SERVERS } from "./constants.js";
 export const ME_MIDE = {
   cid: "1151073208997531673",
@@ -169,7 +169,8 @@ export const SORTEO = {
       "description": "Saca un ganador aleatorio del sorteo.",
       "type": CommandType.SUB_COMMAND,
     },
-  ]
+  ],
+  default_member_permissions: PermissionFlag.ADMINISTRATOR
 };
 
 export const PARTICIPAR = {
