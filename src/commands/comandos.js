@@ -10,8 +10,7 @@ export const comandos = (C) => {
         .map(el => {
           const cd = `- </${command.name} ${el.name}:${command.cid}>`;
           const desc = `${el.description}`;
-          return el.name == "eliminar" ? `${cd} **🛡️ [MOD]** *${desc.replace("🔒","").trim()}*\n` : `${cd} *${desc}*\n`;
-
+          return `${cd} *${desc}*\n`;
         });
     } else {
       return [`-  </${command.name}:${command.cid}> *${command.description}*\n`];
