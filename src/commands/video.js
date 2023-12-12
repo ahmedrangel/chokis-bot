@@ -53,7 +53,7 @@ export const video = (getValue, env, context, token) => {
         }
         if (fileSize > 0 && fileSize < 50000000) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
-          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-gemi-chan?video_url=${encodedScrappedUrl}`);
+          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
           const url_uploaded = await upload.text();
           const urlId = obtenerIDDesdeURL(url_uploaded);
           files.push({
