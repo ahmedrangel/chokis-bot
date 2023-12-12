@@ -1,6 +1,7 @@
 import { avatar } from "../images.js";
 import { CONSTANTS } from "../constants.js";
 import { reply } from "../interaction.js";
+import { InteractionResponseFlags } from "discord-interactions";
 const { COLOR, BOT } = CONSTANTS;
 
 export const comandos = (C) => {
@@ -17,16 +18,19 @@ export const comandos = (C) => {
     }
   });
 
-  return reply(null, { embeds: [{
-    title: "Lista de comandos disponibles",
-    description: `${list.join("")}`,
-    color: COLOR,
-    author: {
-      name: BOT,
-      icon_url: avatar
-    },
-    footer: {
-      text: "Creado por Ahmed",
-    }
-  }]});
+  return reply(null, {
+    embeds: [{
+      title: "Lista de comandos disponibles",
+      description: `${list.join("")}`,
+      color: COLOR,
+      author: {
+        name: BOT,
+        icon_url: avatar
+      },
+      footer: {
+        text: "Creado por Ahmed",
+      }
+    }],
+    flags: InteractionResponseFlags.EPHEMERAL
+  });
 };
