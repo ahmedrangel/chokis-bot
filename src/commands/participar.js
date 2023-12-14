@@ -14,7 +14,7 @@ export const participar = (env, context, request_data) => {
     if (selectGuilds?.activeGiveaway && !selectGiveaways) {
       await env.CHOKISDB.prepare(`INSERT INTO giveaways (participantId, participantName, guildId, participantAvatar) VALUES ('${pId}', '${pName}', '${guild_id}', '${pAvatar}')`).first();
       title = "✅ ¡Has entrado al sorteo!";
-      description = "🤞 Ya estás participando en el torneo. Buena suerte!";
+      description = "🤞 Ya estás participando en el sorteo. Buena suerte!";
     } else if (selectGuilds?.activeGiveaway && selectGiveaways) {
       description = "⚠️ Ya estás participando en el sorteo. Espera que el moderador anuncie el ganador.";
     } else {
