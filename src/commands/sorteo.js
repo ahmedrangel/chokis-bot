@@ -2,6 +2,7 @@ import { deferReply, deferUpdate } from "../interaction";
 import { CONSTANTS } from "../constants.js";
 import { PARTICIPAR } from "../commands.js";
 import { getUpdatedAvatarUrl, getRandom } from "../functions.js";
+import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 const { COLOR } = CONSTANTS;
 export const sorteo = (env, context, request_data) => {
   const { guild_id, token, data } = request_data;
@@ -20,10 +21,18 @@ export const sorteo = (env, context, request_data) => {
         description = "⚠️ Ya hay un sorteo activo, debes cerrar o finalizar el sorteo para crear otro.";
       }
       const embeds = [{ color: COLOR, title: title, description: description }];
+      const button = [{
+        type: MessageComponentTypes.BUTTON,
+        style: ButtonStyleTypes.LINK,
+        label: "Ver Participantes",
+        url: "https://sorteos.ahmedrangel.com/lista/" + guild_id
+      }];
+      const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
       return deferUpdate("", {
         token: token,
         application_id: env.DISCORD_APPLICATION_ID,
-        embeds: embeds
+        embeds: embeds,
+        components: components
       });
     } else if (option.name === "cerrar") {
       // cerrar
