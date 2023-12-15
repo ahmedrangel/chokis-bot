@@ -25,7 +25,17 @@ export const participar = (env, context, request_data) => {
         url: participantsLink
       });
       components.push({ type: MessageComponentTypes.ACTION_ROW, components: button });
-      await fetch(`${env.EXT_WORKER_AHMED}/put/discord-avatars?url=https://cdn.discordapp.com/avatars/${pId}/${pAvatar}?size=256`);
+      for (let i = 0; i < 3; i++) {
+        try {
+          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put/discord-avatars?url=https://cdn.discordapp.com/avatars/${pId}/${pAvatar}?size=256`);
+          if (upload.ok) {
+            console.log("avatar uploaded");
+            break;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
     } else if (selectGuilds?.activeGiveaway && selectGiveaways) {
       description = `⚠️ Ya estás participando en el sorteo.\nEspera que el moderador anuncie el ganador.\n\n${viewParticipants}`;
       button.push({
