@@ -5,7 +5,6 @@ export * from "./lol-profile.js";
 export * from "./video.js";
 export * from "./audio.js";
 export * from "./sorteo.js";
-export * from "./participar.js";
 export * from "./lol-mmr.js";
 export * from "./lol-game.js";
 export * from "./lol-maestrias.js";

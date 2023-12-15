@@ -1,6 +1,6 @@
 import { deferReply, deferUpdate } from "../interaction";
 import { CONSTANTS } from "../constants.js";
-import { PARTICIPAR } from "../commands.js";
+import { PARTICIPAR } from "../components.js";
 import { getUpdatedAvatarUrl, getRandom } from "../functions.js";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 const { COLOR } = CONSTANTS;
@@ -9,25 +9,32 @@ export const sorteo = (env, context, request_data) => {
   const option = data.options[0];
   const followUpRequest = async () => {
     let description, title, winnerArr;
+    const button = [{
+      type: MessageComponentTypes.BUTTON,
+      style: ButtonStyleTypes.LINK,
+      label: "Ver Participantes",
+      url: "https://sorteos.ahmedrangel.com/lista/" + guild_id
+    }];
     if (option.name === "nuevo") {
       // nuevo
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       if (!select?.activeGiveaway) {
         title = "🎁 ¡Sorteo abierto! 📢";
-        description = `📝 Para participar usa el comando: </${PARTICIPAR.name}:${PARTICIPAR.cid}>`;
+        description = `📝 Para participar haz click en el botón de \`${PARTICIPAR.label}\``;
         await env.CHOKISDB.prepare(`DELETE FROM giveaways WHERE guildId = '${guild_id}'`).first();
         await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway) VALUES ('${guild_id}', ${true})`).first();
+        button.push({
+          type: MessageComponentTypes.BUTTON,
+          style: ButtonStyleTypes.PRIMARY,
+          custom_id: PARTICIPAR.custom_id,
+          label: PARTICIPAR.label
+        });
       } else {
         description = "⚠️ Ya hay un sorteo activo, debes cerrar o finalizar el sorteo para crear otro.";
       }
       const embeds = [{ color: COLOR, title: title, description: description }];
-      const button = [{
-        type: MessageComponentTypes.BUTTON,
-        style: ButtonStyleTypes.LINK,
-        label: "Ver Participantes",
-        url: "https://sorteos.ahmedrangel.com/lista/" + guild_id
-      }];
-      const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
+
+      const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button.reverse() }];
       return deferUpdate("", {
         token: token,
         application_id: env.DISCORD_APPLICATION_ID,

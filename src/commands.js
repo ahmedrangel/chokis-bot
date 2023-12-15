@@ -173,13 +173,6 @@ export const SORTEO = {
   default_member_permissions: PermissionFlag.ADMINISTRATOR
 };
 
-export const PARTICIPAR = {
-  cid: "1182847179249963010",
-  name: "participar",
-  description: "Entras a participar a un sorteo activo.",
-  options: []
-};
-
 /*
 export const TEST = {
   name: "test",
