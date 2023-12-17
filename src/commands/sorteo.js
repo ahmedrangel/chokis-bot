@@ -73,19 +73,23 @@ export const sorteo = (env, context, request_data) => {
     } else if (option.name === "sacar") {
       // sacar
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
-      const giveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}'`).all();
+      const giveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}' AND rolled = ${false}`).all();
       const participants = giveaways.results;
+      console.log(participants[0]);
       if (!select?.activeGiveaway && participants[0]) {
         const random = getRandom({ min: 0, max: participants.length - 1 });
         const winner = participants[random];
         winnerArr = winner;
         console.log(random, winner);
-        title = "🏆 ¡Hay un ganador! 📢";
-        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. **¡FELICIDADES!**\n\nTotal de participantes: ${participants.length}`;
+        title = "🥳 ¡Hay un ganador! 📢";
+        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. **¡FELICIDADES!** 🎉`;
+        await env.CHOKISDB.prepare(`UPDATE giveaways SET rolled = ${true} WHERE participantId = '${winner.participantId}' AND guildId = '${guild_id}'`).first();
       } else if (select?.activeGiveaway && participants[0]) {
-        description = "⚠️ Cierra el sorteo activo primero para sacar un ganador.";
+        description = "⚠️ Cierra el sorteo activo primero antes de sacar un ganador.";
       } else if (select?.activeGiveaway && !participants[0]) {
         description = "⚠️ Aún no hay participantes para escoger un ganador.";
+      } else if (!select?.activeGiveaway && !participants[0]) {
+        description = "⚠️ No hay más participantes para sacar.";
       } else {
         description = "❌ No hay ningún sorteo activo para sacar un ganador.";
       }
