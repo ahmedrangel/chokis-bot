@@ -2,8 +2,9 @@
  * Cloudflare worker.
  */
 import { Router } from "itty-router";
-import { API, verifyKey } from "./lib/discord.js";
+import { API } from "./lib/discord.js";
 import { commandsHandler } from "./handler.js";
+import { verifyKey } from "discord-interactions";
 
 const router = Router();
 

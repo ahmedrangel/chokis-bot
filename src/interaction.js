@@ -1,8 +1,9 @@
 /**
  * Discord interactions manager
  */
-import { InteractionResponseType, InteractionType, API } from "./lib/discord.js";
+import { API } from "./lib/discord.js";
 import { getFrom } from "./functions.js";
+import { InteractionResponseType, InteractionType } from "discord-interactions";
 
 class JsonResponse extends Response {
   constructor(body, init) {
