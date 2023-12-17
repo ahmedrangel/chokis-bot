@@ -75,7 +75,6 @@ export const sorteo = (env, context, request_data) => {
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       const giveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}' AND rolled = ${false}`).all();
       const participants = giveaways.results;
-      console.log(participants[0]);
       if (!select?.activeGiveaway && participants[0]) {
         const random = getRandom({ min: 0, max: participants.length - 1 });
         const winner = participants[random];
