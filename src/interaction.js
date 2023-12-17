@@ -17,15 +17,16 @@ class JsonResponse extends Response {
 }
 
 class JsonRequest extends Request {
-  constructor(url, body, init) {
+  constructor(url, body, init, authorization) {
     console.log(body);
     const options = {
       ...init,
-      body: JSON.stringify(body),
       headers: {
-        "Content-Type": "application/json;charset=UTF-8"
+        "Content-Type": "application/json;charset=UTF-8",
+        "Authorization": authorization
       }
     };
+    body ? options.body = JSON.stringify(body) : null;
     super(url, options);
   }
 }
@@ -54,12 +55,12 @@ const toDiscord = (body, init) => {
   return new JsonResponse(body, init);
 };
 
-const toDiscordEndpoint = (endpoint, body, method) => {
+const toDiscordEndpoint = (endpoint, body, method, authorization) => {
   const endpoint_url = `${API.BASE}${endpoint}`;
   if (!body.files) {
-    return fetch(new JsonRequest(endpoint_url, body, { method }));
+    return fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
   } else {
-    return fetch(new JsonFileRequest(endpoint_url, body, { method }));
+    return fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
   }
 };
 
@@ -110,6 +111,26 @@ export const deferUpdate = (content, options) => {
     components: options?.components,
     files: options?.files,
   }, "POST");
+};
+
+export const getOriginalMessage = async (options) => {
+  const { token, application_id} = options;
+  const endpoint = `${API.BASE}/webhooks/${application_id}/${token}/messages/@original`;
+  const response = await fetch(endpoint);
+  const message = await response.json();
+  return message;
+};
+
+export const editMessage = (content, options) => {
+  const { token, channel_id, message_id } = options;
+  const endpoint = `/channels/${channel_id}/messages/${message_id}`;
+  return toDiscordEndpoint(endpoint, {
+    content: content,
+    embeds: options?.embeds,
+    components: options?.components,
+    files: options?.files,
+    flags: options?.flags
+  }, "PATCH", "Bot " + token);
 };
 
 export const error = (message, code) => {

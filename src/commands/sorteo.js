@@ -1,4 +1,4 @@
-import { deferReply, deferUpdate } from "../interaction";
+import { deferReply, deferUpdate, editMessage, getOriginalMessage } from "../interaction";
 import { CONSTANTS } from "../constants.js";
 import { PARTICIPAR } from "../components.js";
 import { getUpdatedAvatarUrl, getRandom } from "../functions.js";
@@ -9,12 +9,19 @@ export const sorteo = (env, context, request_data) => {
   const option = data.options[0];
   const followUpRequest = async () => {
     let description, title, winnerArr;
-    const button = [{
+    const participantes_btn = {
       type: MessageComponentTypes.BUTTON,
       style: ButtonStyleTypes.LINK,
       label: "Ver Participantes",
-      url: "https://sorteos.ahmedrangel.com/lista/" + guild_id
-    }];
+      url: "https://sorteos.ahmedrangel.com/lista/" + guild_id,
+    };
+    const participar_btn = {
+      type: MessageComponentTypes.BUTTON,
+      style: ButtonStyleTypes.PRIMARY,
+      custom_id: PARTICIPAR.custom_id,
+      label: PARTICIPAR.label
+    };
+    const button = [participantes_btn];
     if (option.name === "nuevo") {
       // nuevo
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
@@ -22,18 +29,13 @@ export const sorteo = (env, context, request_data) => {
         title = "🎁 ¡Sorteo abierto! 📢";
         description = `📝 Para participar haz click en el botón de \`${PARTICIPAR.label}\``;
         await env.CHOKISDB.prepare(`DELETE FROM giveaways WHERE guildId = '${guild_id}'`).first();
-        await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway) VALUES ('${guild_id}', ${true})`).first();
-        button.push({
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.PRIMARY,
-          custom_id: PARTICIPAR.custom_id,
-          label: PARTICIPAR.label
-        });
+        const message = await getOriginalMessage({ token: token, application_id: env.DISCORD_APPLICATION_ID });
+        await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway, msgIdGiveaway, channelIdGiveaway) VALUES ('${guild_id}', ${true}, '${message.id}', ${message.channel_id})`).first();
+        button.push(participar_btn);
       } else {
         description = "⚠️ Ya hay un sorteo activo, debes cerrar o finalizar el sorteo para crear otro.";
       }
       const embeds = [{ color: COLOR, title: title, description: description }];
-
       const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button.reverse() }];
       return deferUpdate("", {
         token: token,
@@ -43,11 +45,20 @@ export const sorteo = (env, context, request_data) => {
       });
     } else if (option.name === "cerrar") {
       // cerrar
-      const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
+      const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway, msgIdGiveaway, channelIdGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       if (select.activeGiveaway) {
         title = "🛑 ¡Sorteo cerrado! 📢";
         description = "Las entradas al torneo han sido cerradas";
-        await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway) VALUES ('${guild_id}', ${false})`).first();
+        button.push(participar_btn);
+        button.forEach(button => { button.disabled = true; });
+        const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button.reverse() }];
+        editMessage("", {
+          message_id: select.msgIdGiveaway,
+          channel_id: select.channelIdGiveaway,
+          components: components,
+          token: env.DISCORD_TOKEN
+        });
+        await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway, msgIdGiveaway, channelIdGiveaway) VALUES ('${guild_id}', ${false}, ${null}, ${null})`).first();
       } else {
         description = "⚠️ No hay ningun sorteo activo.";
       }
@@ -68,7 +79,7 @@ export const sorteo = (env, context, request_data) => {
         winnerArr = winner;
         console.log(random, winner);
         title = "🏆 ¡Hay un ganador! 📢";
-        description = `🪄 <@${winner.participantId}> (@${winner.participantName}) ha salido como **ganador** del sorteo. ¡Felicidades!\nTotal de participantes: ${participants.length}`;
+        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. **¡FELICIDADES!**\n\nTotal de participantes: ${participants.length}`;
       } else if (select?.activeGiveaway && participants[0]) {
         description = "⚠️ Cierra el sorteo activo primero para sacar un ganador.";
       } else if (select?.activeGiveaway && !participants[0]) {
