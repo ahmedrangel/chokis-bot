@@ -18,13 +18,6 @@ export const participar = (env, context, request_data) => {
       await env.CHOKISDB.prepare(`INSERT INTO giveaways (participantId, participantName, guildId, participantAvatar) VALUES ('${pId}', '${pName}', '${guild_id}', '${pAvatar}')`).first();
       title = "✅ ¡Has entrado al sorteo!";
       description = `🤞 Ya estás participando en el sorteo. Buena suerte!\n\n${viewParticipants}`;
-      button.push({
-        type: MessageComponentTypes.BUTTON,
-        style: ButtonStyleTypes.LINK,
-        label: "Ver Participantes",
-        url: participantsLink
-      });
-      components.push({ type: MessageComponentTypes.ACTION_ROW, components: button });
       for (let i = 0; i < 3; i++) {
         try {
           const upload = await fetch(`${env.EXT_WORKER_AHMED}/put/discord-avatars?url=https://cdn.discordapp.com/avatars/${pId}/${pAvatar}?size=256`);
@@ -38,13 +31,6 @@ export const participar = (env, context, request_data) => {
       }
     } else if (selectGuilds?.activeGiveaway && selectGiveaways) {
       description = `⚠️ Ya estás participando en el sorteo.\nEspera que el moderador anuncie el ganador.\n\n${viewParticipants}`;
-      button.push({
-        type: MessageComponentTypes.BUTTON,
-        style: ButtonStyleTypes.LINK,
-        label: "Ver Participantes",
-        url: participantsLink
-      });
-      components.push({ type: MessageComponentTypes.ACTION_ROW, components: button });
     } else {
       description = "❌ No hay ningún sorteo activo para participar.";
     }
