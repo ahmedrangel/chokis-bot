@@ -68,9 +68,8 @@ export const PermissionFlags = {
 
 export const hasPermission = (permission, flag) => {
   const binaryPermissions = (BigInt(permission)).toString(2);
-  const permissionValue = flag;
-  if (permissionValue) {
-    const isPermissionSet = binaryPermissions.charAt(binaryPermissions.length - (permissionValue.toString(2).length)) === "1";
+  if (flag) {
+    const isPermissionSet = binaryPermissions.charAt(binaryPermissions.length - (flag.toString(2).length)) === "1";
     return isPermissionSet;
   }
   return false;
