@@ -1,6 +1,6 @@
 import { deferReply, deferUpdate, editFollowUpMessage } from "../interaction";
 import { CONSTANTS } from "../constants.js";
-import { ButtonStyleTypes, InteractionResponseFlags, MessageComponentTypes } from "discord-interactions";
+import { InteractionResponseFlags } from "discord-interactions";
 import { PARTICIPAR } from "../components.js";
 const { COLOR } = CONSTANTS;
 export const participar = (env, context, request_data) => {
