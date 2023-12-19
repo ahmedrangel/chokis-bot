@@ -103,7 +103,7 @@ export const deferReply = (options) => {
 };
 
 export const deferUpdate = (content, options) => {
-  const { token, application_id} = options;
+  const { token, application_id } = options;
   const followup_endpoint = `/webhooks/${application_id}/${token}`;
   return toDiscordEndpoint(followup_endpoint, {
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
@@ -115,7 +115,7 @@ export const deferUpdate = (content, options) => {
 };
 
 export const getOriginalMessage = async (options) => {
-  const { token, application_id} = options;
+  const { token, application_id } = options;
   const endpoint = `${API.BASE}/webhooks/${application_id}/${token}/messages/@original`;
   const response = await fetch(endpoint);
   const message = await response.json();
@@ -132,6 +132,18 @@ export const editMessage = (content, options) => {
     files: options?.files,
     flags: options?.flags
   }, "PATCH", "Bot " + token);
+};
+
+export const editFollowUpMessage = (content, options) => {
+  const { token, application_id, message_id } = options;
+  const endpoint = `/webhooks/${application_id}/${token}/messages/${message_id}`;
+  return toDiscordEndpoint(endpoint, {
+    content: content,
+    embeds: options?.embeds,
+    components: options?.components,
+    files: options?.files,
+    flags: options?.flags
+  }, "PATCH");
 };
 
 export const error = (message, code) => {
