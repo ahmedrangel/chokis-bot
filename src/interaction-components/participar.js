@@ -1,15 +1,16 @@
-import { deferReply, deferUpdate } from "../interaction";
+import { deferReply, deferUpdate, editFollowUpMessage } from "../interaction";
 import { CONSTANTS } from "../constants.js";
 import { ButtonStyleTypes, InteractionResponseFlags, MessageComponentTypes } from "discord-interactions";
+import { PARTICIPAR } from "../components.js";
 const { COLOR } = CONSTANTS;
 export const participar = (env, context, request_data) => {
-  const { member, guild_id, token } = request_data;
+  console.log(request_data);
+  const { member, guild_id, token, message } = request_data;
   const pId = member.user.id;
   const pName = member.user.username;
   const pAvatar = member.user.avatar;
   const participantsLink = "https://sorteos.ahmedrangel.com/lista/" + guild_id;
   const viewParticipants = `Puedes ver a todos los participantes haciendo [click aquí](${participantsLink}).`;
-  const button = [], components = [];
   const followUpRequest = async () => {
     const selectGuilds = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
     const selectGiveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}' AND participantId = '${pId}'`).first();
@@ -29,17 +30,29 @@ export const participar = (env, context, request_data) => {
           console.log(e);
         }
       }
+      const participants = await env.CHOKISDB.prepare(`SELECT COUNT(participantId) as count FROM giveaways WHERE guildId = '${guild_id}'`).first();
+      const embedsEdit = [{
+        color: COLOR,
+        title: "🎁 ¡Sorteo abierto! 📢",
+        description: `📝 Para participar haz click en el botón de \`${PARTICIPAR.label}\`\n### \`Participantes: ${participants.count}\``
+      }];
+      await editFollowUpMessage("", {
+        token,
+        application_id: env.DISCORD_APPLICATION_ID,
+        embeds: embedsEdit,
+        message_id: message.id
+      });
     } else if (selectGuilds?.activeGiveaway && selectGiveaways) {
-      description = `⚠️ Ya estás participando en el sorteo.\nEspera que el moderador anuncie el ganador.\n\n${viewParticipants}`;
+      title = "⚠️ Ya estás participando en el sorteo";
+      description = "Espera que el moderador anuncie el ganador.";
     } else {
       description = "❌ No hay ningún sorteo activo para participar.";
     }
     const embeds = [{ color: COLOR, title: title, description: description }];
     return deferUpdate("", {
-      token: token,
+      token,
       application_id: env.DISCORD_APPLICATION_ID,
-      embeds: embeds,
-      components: components
+      embeds,
     });
   };
   context.waitUntil(followUpRequest());
