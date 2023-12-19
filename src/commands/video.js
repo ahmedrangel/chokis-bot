@@ -44,14 +44,14 @@ export const video = (getValue, env, context, token) => {
           return {blob: blob, fileSize: fileSize, caption: imbedUrlsFromString(caption)};
         };
         let {blob, fileSize, caption} = await fetchScraped();
-        while (fileSize === 0 && retryCount < 3) {
+        while (fileSize < 100 && retryCount < 3) {
           console.log("El tamaño del archivo es 0. Volviendo a intentar...");
           await new Promise(resolve => setTimeout(resolve, 1000));
           ({ blob, fileSize, caption } = await fetchScraped());
           retryCount++;
           console.log("Intento: " + retryCount);
         }
-        if (fileSize > 0 && fileSize < 50000000) {
+        if (fileSize > 100 && fileSize < 50000000) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
           const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
           const url_uploaded = await upload.text();
