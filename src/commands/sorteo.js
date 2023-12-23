@@ -1,7 +1,7 @@
 import { deferReply, deferUpdate, editMessage, getOriginalMessage } from "../interaction";
 import { CONSTANTS } from "../constants.js";
 import { PARTICIPAR } from "../components.js";
-import { getUpdatedAvatarUrl, getRandom } from "../functions.js";
+import { getUpdatedAvatarUrl, getRandom, fetchUsers } from "../functions.js";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 const { COLOR } = CONSTANTS;
 
@@ -9,7 +9,7 @@ export const sorteo = (env, context, request_data) => {
   const { guild_id, token, data } = request_data;
   const option = data.options[0];
   const followUpRequest = async () => {
-    let description, title, winnerArr;
+    let description, title;
     const buttonComp = { type: MessageComponentTypes.BUTTON };
     const participantes_btn = {
       ...buttonComp,
@@ -50,7 +50,7 @@ export const sorteo = (env, context, request_data) => {
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway, msgIdGiveaway, channelIdGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       if (select.activeGiveaway) {
         title = "🛑 ¡Sorteo cerrado! 📢";
-        description = "Las entradas al torneo han sido cerradas";
+        description = "Las entradas al sorteo han sido cerradas";
         button.push(participar_btn);
         button.forEach(button => { button.disabled = true; });
         const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button.reverse() }];
@@ -72,16 +72,19 @@ export const sorteo = (env, context, request_data) => {
       });
     } else if (option.name === "sacar") {
       // sacar
+      let winnerArr;
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       const giveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}' AND rolled = ${false}`).all();
       const participants = giveaways.results;
       if (!select?.activeGiveaway && participants[0]) {
-        const random = getRandom({ min: 0, max: participants.length - 1 });
-        const winner = participants[random];
+        const shuffledParticipants = participants.sort(() => Math.random() - 0.5);
+        const random = getRandom({ min: 0, max: shuffledParticipants.length - 1 });
+        const winner = shuffledParticipants[random];
         winnerArr = winner;
         console.log(random, winner);
+        const winnerData = await fetchUsers(winner.participantId, env.DISCORD_TOKEN);
         title = "🥳 ¡Hay un ganador! 📢";
-        description = `🪄 <@${winner.participantId}> (${winner.participantName}) ha salido como **ganador** del sorteo. **¡FELICIDADES!** 🎉`;
+        description = `🪄 <@${winner.participantId}> (${winnerData.username}) ha salido como **ganador** del sorteo. **¡FELICIDADES!** 🎉`;
         await env.CHOKISDB.prepare(`UPDATE giveaways SET rolled = ${true} WHERE participantId = '${winner.participantId}' AND guildId = '${guild_id}'`).first();
       } else if (select?.activeGiveaway && participants[0]) {
         description = "⚠️ Cierra el sorteo activo primero antes de sacar un ganador.";
