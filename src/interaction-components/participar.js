@@ -4,7 +4,6 @@ import { InteractionResponseFlags } from "discord-interactions";
 import { PARTICIPAR } from "../components.js";
 const { COLOR } = CONSTANTS;
 export const participar = (env, context, request_data) => {
-  console.log(request_data);
   const { member, guild_id, token, message } = request_data;
   const pId = member.user.id;
   const pName = member.user.username;
