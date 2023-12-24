@@ -16,29 +16,48 @@ export const sorteo = (env, context, request_data) => {
       style: ButtonStyleTypes.LINK,
       label: "Ver Participantes",
       url: "https://sorteos.ahmedrangel.com/lista/" + guild_id,
+      disabled: false
     };
     const participar_btn = {
       ...buttonComp,
       style: ButtonStyleTypes.PRIMARY,
       custom_id: PARTICIPAR.custom_id,
-      label: PARTICIPAR.label
+      label: PARTICIPAR.label,
+      disabled: false
     };
-    const button = [participantes_btn];
+    const button = [participar_btn, participantes_btn];
     if (option.name === "nuevo") {
       // nuevo
-      const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
+      const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway, msgIdGiveaway, channelIdGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       if (!select?.activeGiveaway) {
+        // edit with disabled buttons if there was a previous giveaway
+        if (select?.msgIdGiveaway && select?.channelIdGiveaway) {
+          for (const btn of button) { btn.disabled = true; }
+          const componentsEdit = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
+          editMessage("", {
+            message_id: select?.msgIdGiveaway,
+            channel_id: select?.channelIdGiveaway,
+            components: componentsEdit,
+            token: env.DISCORD_TOKEN
+          });
+        }
         title = "🎁 ¡Sorteo abierto! 📢";
         description = `📝 Para participar haz click en el botón de \`${PARTICIPAR.label}\``;
         await env.CHOKISDB.prepare(`DELETE FROM giveaways WHERE guildId = '${guild_id}'`).first();
         const message = await getOriginalMessage({ token: token, application_id: env.DISCORD_APPLICATION_ID });
         await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway, msgIdGiveaway, channelIdGiveaway) VALUES ('${guild_id}', ${true}, '${message.id}', ${message.channel_id})`).first();
-        button.push(participar_btn);
       } else {
         description = "⚠️ Ya hay un sorteo activo, debes cerrar o finalizar el sorteo para crear otro.";
+        const embeds = [{ color: COLOR, title: title, description: description }];
+        return deferUpdate("", {
+          token,
+          application_id: env.DISCORD_APPLICATION_ID,
+          embeds
+        });
       }
       const embeds = [{ color: COLOR, title: title, description: description }];
-      const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button.reverse() }];
+      for (const btn of button) { btn.disabled = false; }
+      const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
       return deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
@@ -48,19 +67,21 @@ export const sorteo = (env, context, request_data) => {
     } else if (option.name === "cerrar") {
       // cerrar
       const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway, msgIdGiveaway, channelIdGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
-      if (select.activeGiveaway) {
+      if (select?.activeGiveaway) {
         title = "🛑 ¡Sorteo cerrado! 📢";
         description = "Las entradas al sorteo han sido cerradas";
-        button.push(participar_btn);
-        button.forEach(button => { button.disabled = true; });
-        const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button.reverse() }];
+        for (const btn of button) {
+          if (btn.custom_id === PARTICIPAR.custom_id)
+            btn.disabled = true;
+        }
+        const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
         editMessage("", {
           message_id: select.msgIdGiveaway,
           channel_id: select.channelIdGiveaway,
           components,
           token: env.DISCORD_TOKEN
         });
-        await env.CHOKISDB.prepare(`INSERT OR REPLACE INTO guilds (id, activeGiveaway, msgIdGiveaway, channelIdGiveaway) VALUES ('${guild_id}', ${false}, ${null}, ${null})`).first();
+        await env.CHOKISDB.prepare(`UPDATE guilds SET activeGiveaway = ${false} WHERE id = '${guild_id}'`).first();
       } else {
         description = "⚠️ No hay ningun sorteo activo.";
       }
@@ -73,7 +94,7 @@ export const sorteo = (env, context, request_data) => {
     } else if (option.name === "sacar") {
       // sacar
       let winnerArr;
-      const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
+      const select = await env.CHOKISDB.prepare(`SELECT activeGiveaway, msgIdGiveaway FROM guilds WHERE id = '${guild_id}'`).first();
       const giveaways = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guild_id}' AND rolled = ${false}`).all();
       const participants = giveaways.results;
       if (!select?.activeGiveaway && participants[0]) {
@@ -86,11 +107,11 @@ export const sorteo = (env, context, request_data) => {
         title = "🥳 ¡Hay un ganador! 📢";
         description = `🪄 <@${winner.participantId}> (${winnerData.username}) ha salido como **ganador** del sorteo. **¡FELICIDADES!** 🎉`;
         await env.CHOKISDB.prepare(`UPDATE giveaways SET rolled = ${true} WHERE participantId = '${winner.participantId}' AND guildId = '${guild_id}'`).first();
-      } else if (select?.activeGiveaway && participants[0]) {
+      } else if (select?.activeGiveaway && participants[0] && select?.msgIdGiveaway ) {
         description = "⚠️ Cierra el sorteo activo primero antes de sacar un ganador.";
-      } else if (select?.activeGiveaway && !participants[0]) {
+      } else if (select?.activeGiveaway && !participants[0] && select?.msgIdGiveaway ) {
         description = "⚠️ Aún no hay participantes para escoger un ganador.";
-      } else if (!select?.activeGiveaway && !participants[0]) {
+      } else if (!select?.activeGiveaway && !participants[0] && select?.msgIdGiveaway ) {
         description = "⚠️ No hay más participantes para sacar.";
       } else {
         description = "❌ No hay ningún sorteo activo para sacar un ganador.";
