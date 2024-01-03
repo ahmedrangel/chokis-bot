@@ -10,10 +10,10 @@ export const audio = (getValue, env, context, token) => {
     const url = getValue("link");
     if (url.includes("youtube.com/") || url.includes("youtu.be/")) {
       const encodedUrl = encodeURIComponent(url);
-      const infoF = await fetch(`${env.EXT_WORKER_YTDL}/yt-info?url=${encodedUrl}`);
+      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/yt-info?url=${encodedUrl}`);
       const info = await infoF.json();
-      const title = info.caption;
-      const duration = info.duration;
+      const title = info?.caption;
+      const duration = info?.duration;
       if (infoF.ok) {
         if (duration <= 600) {
           const youtubeF = await fetch(`${env.EXT_WORKER_YTDL}/ytdl?url=${encodedUrl}&filter=audioonly`);
