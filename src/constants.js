@@ -76,7 +76,7 @@ export const supportedSocials = {
     name: "Instagram"
   },
   tiktok: {
-    domains: ["tiktok.com/@", "vm.tiktok.com/", "m.tiktok.com/"],
+    domains: ["tiktok.com/@", "vm.tiktok.com/", "m.tiktok.com/", "tiktok.com/t/"],
     name: "TikTok"
   },
   twitter: {
