@@ -22,14 +22,10 @@ export const video = (getValue, env, context, token) => {
     }
     if (esUrl(url) && supported == true) {
       const encodedUrl = encodeURIComponent(url);
-      const scrappingUrl = red_social !== "YouTube"
-        ? `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper?url=${encodedUrl}`
-        : `${env.EXT_WORKER_AHMED}/dc/yt-info?url=${encodedUrl}`;
+      const scrappingUrl = `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper?url=${encodedUrl}&filter=video`;
       const scrapping = await fetch(scrappingUrl);
       const json_scrapped = await scrapping.json();
-      const url_scrapped = red_social !== "YouTube"
-        ? json_scrapped?.video_url
-        : `${env.EXT_WORKER_YTDL}/ytdl?url=${encodedUrl}&filter=videoandaudio`;
+      const url_scrapped = json_scrapped?.video_url;
       const short_url = json_scrapped?.short_url;
       const status = json_scrapped?.status;
       console.log(status);

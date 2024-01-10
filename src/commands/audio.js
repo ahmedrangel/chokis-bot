@@ -10,18 +10,18 @@ export const audio = (getValue, env, context, token) => {
     const url = getValue("link");
     if (url.includes("youtube.com/") || url.includes("youtu.be/")) {
       const encodedUrl = encodeURIComponent(url);
-      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/yt-info?url=${encodedUrl}`);
+      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/ytdl?url=${encodedUrl}`);
       const info = await infoF.json();
       const title = info?.caption;
       const duration = info?.duration;
       if (infoF.ok) {
         if (duration <= 600) {
-          const youtubeF = await fetch(`${env.EXT_WORKER_YTDL}/ytdl?url=${encodedUrl}&filter=audioonly`);
+          const youtubeF = await fetch(info?.video_url);
           const audioBlob = await youtubeF.blob();
           const fileSize = audioBlob.size;
           console.log("Tamaño: " + fileSize);
-          if (fileSize < 25000000) {
-            mensaje = `${getSocial("youtube")} YouTube: <${url}>\n${title}`;
+          if (fileSize < 50000000) {
+            mensaje = `${getSocial("youtube")} YouTube: <${info?.short_url}>\n${title}`;
             files.push({
               name: `${title}.mp3`,
               file: audioBlob
