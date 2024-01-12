@@ -10,7 +10,7 @@ export const audio = (getValue, env, context, token) => {
     const url = getValue("link");
     if (url.includes("youtube.com/") || url.includes("youtu.be/")) {
       const encodedUrl = encodeURIComponent(url);
-      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/ytdl?url=${encodedUrl}`);
+      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/youtube-video-scrapper?url=${encodedUrl}&filter=audio`);
       const info = await infoF.json();
       const title = info?.caption;
       const duration = info?.duration;
@@ -21,7 +21,7 @@ export const audio = (getValue, env, context, token) => {
           const fileSize = audioBlob.size;
           console.log("Tamaño: " + fileSize);
           if (fileSize < 50000000) {
-            mensaje = `${getSocial("youtube")} YouTube: <${info?.short_url}>\n${title}`;
+            mensaje = `${getSocial("youtube")} YouTube: [${info?.short_url.replace("https://", "")}](<${info?.short_url}>)\n${title}`;
             files.push({
               name: `${title}.mp3`,
               file: audioBlob
