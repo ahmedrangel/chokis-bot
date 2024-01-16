@@ -10,7 +10,7 @@ export const audio = (getValue, env, context, token) => {
     const url = getValue("link");
     if (url.includes("youtube.com/") || url.includes("youtu.be/")) {
       const encodedUrl = encodeURIComponent(url);
-      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/youtube-video-scrapper?url=${encodedUrl}&filter=audio`);
+      const infoF = await fetch(`${env.EXT_WORKER_AHMED}/dc/youtube/mp3?url=${encodedUrl}&filter=audio`);
       const info = await infoF.json();
       const title = info?.caption;
       const duration = info?.duration;
