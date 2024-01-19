@@ -74,3 +74,7 @@ export const hasPermission = (permission, flag) => {
   }
   return false;
 };
+
+export const isAdmin = (member) => {
+  return hasPermission(member.permissions, PermissionFlags.ADMINISTRATOR);
+};
