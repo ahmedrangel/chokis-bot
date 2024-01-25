@@ -20,7 +20,7 @@ export const video = (getValue, env, context, token) => {
         break;
       }
     }
-    if (esUrl(url) && supported == true) {
+    if (supported == true) {
       const encodedUrl = encodeURIComponent(url);
       const scrappingUrl = `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper?url=${encodedUrl}&filter=video`;
       const scrapping = await fetch(scrappingUrl);
