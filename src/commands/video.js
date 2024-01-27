@@ -1,10 +1,11 @@
-import { errorEmbed, esUrl, imbedUrlsFromString, obtenerIDDesdeURL } from "../functions";
+import { errorEmbed, esUrl, getGuild, imbedUrlsFromString, obtenerIDDesdeURL } from "../functions";
 import { deferReply, deferUpdate } from "../interaction";
 import { getSocial } from "../emojis";
 import { supportedSocials } from "../constants";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 
-export const video = (getValue, env, context, token) => {
+export const video = (getValue, env, context, request_data) => {
+  const { guild_id, token } = request_data;
   const followUpRequest = async () => {
     let mensaje, emoji;
     let embeds = [], files = [], button = [], components = [];
@@ -20,7 +21,7 @@ export const video = (getValue, env, context, token) => {
         break;
       }
     }
-    if (supported == true) {
+    if (esUrl(url) && supported == true) {
       const encodedUrl = encodeURIComponent(url);
       const scrappingUrl = `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper?url=${encodedUrl}&filter=video`;
       const scrapping = await fetch(scrappingUrl);
@@ -47,7 +48,9 @@ export const video = (getValue, env, context, token) => {
           retryCount++;
           console.log("Intento: " + retryCount);
         }
-        if (fileSize > 100 && fileSize < 50000000) {
+        const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
+        const maxSize = guild.premium_tier >= 2 ? 50000000 : 25000000;
+        if (fileSize > 100 && fileSize < maxSize) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
           const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
           const url_uploaded = await upload.text();
@@ -71,7 +74,7 @@ export const video = (getValue, env, context, token) => {
           const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
           embeds = errorEmbed(error);
         } else {
-          const error = ":x: Error. El video es muy pesado o demasiado largo.";
+          const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
           embeds = errorEmbed(error);
         }
       } else {
@@ -79,7 +82,7 @@ export const video = (getValue, env, context, token) => {
         embeds = errorEmbed(error);
       }
     } else {
-      const error = `:x: Error. El texto ingresado no es un link válido de **${red_social}**`;
+      const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
       embeds = errorEmbed(error);
     }
     // Return del refer

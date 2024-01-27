@@ -16,7 +16,7 @@ export const getRandom = (options) => {
 };
 
 export const esUrl = (cadena) => {
-  const regex = /^(ftp|http|https):\/\/[^ "]+$/;
+  const regex = /^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,})(?:\/\S*)?$/;
   return regex.test(cadena);
 };
 
@@ -104,4 +104,14 @@ export const getUpdatedAvatarUrl = async (userId, avatar, token) => {
   const extension = getExtensionFromResponse(response);
   const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatar}.${extension}?size=2048`;
   return avatarUrl;
+};
+
+export const getGuild = async (id, token) => {
+  const response = await fetch(`${API.BASE}/guilds/${id}`, {
+    headers: {
+      "Authorization": `Bot ${token}`
+    }
+  });
+  const data = await response.json();
+  return data;
 };
