@@ -173,6 +173,20 @@ export const SORTEO = {
   default_member_permissions: PermissionFlags.ADMINISTRATOR
 };
 
+export const CHEER = {
+  cid: "1212916341942648882",
+  name: "cheer",
+  description: "Has una prueba de tus mensajes antes de enviar bits en el canal de Chino.",
+  options: [
+    {
+      "name": "mensaje",
+      "description": "El mensaje que quieres que lea el bot.",
+      "type": CommandType.STRING,
+      "required": true
+    }
+  ]
+};
+
 /*
 export const TEST = {
   name: "test",

@@ -8,3 +8,4 @@ export * from "./sorteo.js";
 export * from "./lol-mmr.js";
 export * from "./lol-game.js";
 export * from "./lol-maestrias.js";
+export * from "./cheer.js";

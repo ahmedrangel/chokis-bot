@@ -46,7 +46,9 @@ export const commandsHandler = async (req, env, context) => {
       // comando /sorteo
       case C.SORTEO.name: return cmd.sorteo(env, context, request_data);
       // comando /participar (en sorteo)
-      case C.PARTICIPAR.name: return cmd.participar(env, context, request_data);
+      // case C.PARTICIPAR.name: return cmd.participar(env, context, request_data);
+      // comando /cheer
+      case C.CHEER.name: return cmd.cheer(getValue, env, context, request_data);
       default: return error("Unknown Type", 400);
       }
     });
