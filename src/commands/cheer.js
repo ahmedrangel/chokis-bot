@@ -1,6 +1,6 @@
 import { deferUpdate, deferReply } from "../interaction";
 import { CONSTANTS } from "../constants.js";
-import { sha256 } from "ohash";
+import { hash } from "ohash";
 
 const { COLOR } = CONSTANTS;
 
@@ -17,7 +17,7 @@ export const cheer = async (getValue, env, context, request_data) => {
     const text = encodeURIComponent(mensaje);
     const response = await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=${VOZ}&text=${text}`);
     const blob = await response.blob();
-    const files = [{ name: `${sha256(text)}.mp3`, file: blob }];
+    const files = [{ name: `${hash(text)}.mp3`, file: blob }];
 
     return deferUpdate("", {
       embeds : [{
