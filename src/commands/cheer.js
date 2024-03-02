@@ -5,15 +5,13 @@ import { hash } from "ohash";
 const { COLOR } = CONSTANTS;
 
 export const cheer = async (getValue, env, context, request_data) => {
+  const { member, token } = request_data;
+  const mensaje = getValue("mensaje").replace(/(<([^>]+)>)/gi, "").trim();
+
+  if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
+
   const followUpRequest = async () => {
     const VOZ = "Miguel";
-    const { member, token } = request_data;
-
-    const mensaje = getValue("mensaje").replace(/(<([^>]+)>)/gi, "").trim();
-    const bits = [
-
-    ];
-    if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
     const text = encodeURIComponent(mensaje);
     const response = await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=${VOZ}&text=${text}`);
     const blob = await response.blob();
