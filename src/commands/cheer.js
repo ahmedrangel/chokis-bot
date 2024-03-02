@@ -1,4 +1,4 @@
-import { deferUpdate, deferReply } from "../interaction";
+import { deferUpdate, deferReply, reply } from "../interaction";
 import { CONSTANTS } from "../constants.js";
 import { hash } from "ohash";
 
