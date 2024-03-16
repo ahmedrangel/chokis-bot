@@ -113,8 +113,8 @@ export const LOLGAME = {
   description: "Obtener información de una partida activa de League of Legends.",
   options: [
     {
-      "name": "invocador",
-      "description": "El nombre de invocador.",
+      "name": "riot_id",
+      "description": "Riot ID. Ej: (Name#TAG).",
       "type": CommandType.STRING,
       "required": true
     },
@@ -124,7 +124,7 @@ export const LOLGAME = {
       "type": CommandType.STRING,
       "required": true,
       "choices": LOL_SERVERS
-    },
+    }
   ]
 };
 

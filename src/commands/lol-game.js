@@ -10,16 +10,26 @@ const teamField = (p) => {
   const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
   const rank = p.rank ? `**${p.rank}**` : "";
   const tierInfo = p.tier ? `${rank} (${p.lp}LP)・${p.wins}V-${p.losses}D (**${winrate}%**)` : "";
-  return `${p.summonerName}\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} ${tierInfo}`;
+  return `${p.riotId}\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} ${tierInfo}`;
 };
 
 export const lolGame = (getValue, env, context, token) => {
   const followUpRequest = async () => {
-    const summoner = getValue("invocador");
+    const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
     const region = getValue("servidor");
+    const riotName = riotId[0];
+    const riotTag = riotId[1];
+    if (!riotTag || !riotName) {
+      return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+        embeds: [{
+          color: COLOR,
+          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+        }]
+      });
+    }
     const embeds = [], components = [], button = [], fields = [], team1 = [], team2 = [];
     let mensaje = "";
-    const gameFetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/live-game-for-discord?summoner=${summoner}&region=${region}`);
+    const gameFetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/spectator/${region}/${riotName}/${riotTag}`);
     const gameData = await gameFetch.json();
     if (gameData.status_code === 200) {
       const gameDuration = getDurationFromTimestampMMSS(gameData.startTime);
@@ -52,13 +62,13 @@ export const lolGame = (getValue, env, context, token) => {
           type: MessageComponentTypes.BUTTON,
           style: ButtonStyleTypes.LINK,
           label: "Ver en OP.GG",
-          url: `https://op.gg/summoners/${gameData.region.toLowerCase()}/${encodeURIComponent(summoner)}/ingame`
+          url: `https://op.gg/summoners/${gameData.region.toLowerCase()}/${encodeURIComponent(riotName)}-${encodeURIComponent(riotTag)}/ingame`
         },
         {
           type: MessageComponentTypes.BUTTON,
           style: ButtonStyleTypes.LINK,
           label: "Ver en Porofessor.gg",
-          url: `https://porofessor.gg/live/${gameData.region.toLowerCase()}/${encodeURIComponent(summoner)}`
+          url: `https://porofessor.gg/live/${gameData.region.toLowerCase()}/${encodeURIComponent(riotName)}-${encodeURIComponent(riotTag)}`
         }
       );
       components.push({
