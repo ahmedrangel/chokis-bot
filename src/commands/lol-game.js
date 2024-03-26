@@ -10,7 +10,7 @@ const teamField = (p) => {
   const winrate = Math.round((p.wins/(p.wins + p.losses))*100);
   const rank = p.rank ? `**${p.rank}**` : "";
   const tierInfo = p.tier ? `${rank} (${p.lp}LP)・${p.wins}V-${p.losses}D (**${winrate}%**)` : "";
-  return `${p.riotId}\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} ${tierInfo}`;
+  return `${p.riotId.replace(/#/g, " #")}\n${getLolSpell(p.spell1Id)}${getLolSpell(p.spell2Id)} ${p.championName}・${tierEmoji} ${tierInfo}`;
 };
 
 export const lolGame = (getValue, env, context, token) => {
