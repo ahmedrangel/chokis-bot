@@ -49,7 +49,8 @@ export const video = (getValue, env, context, request_data) => {
           console.log("Intento: " + retryCount);
         }
         const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
-        const maxSize = guild.premium_tier >= 2 ? 50000000 : 25000000;
+        console.log("premium tier: " + guild.premium_tier);
+        const maxSize = guild.premium_tier >= 3 ? 100000000 : (guild.premium_tier === 2 ? 50000000 : 25000000);
         if (fileSize > 100 && fileSize < maxSize) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
           const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
