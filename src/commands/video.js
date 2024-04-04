@@ -1,11 +1,12 @@
 import { errorEmbed, esUrl, getGuild, imbedUrlsFromString, obtenerIDDesdeURL } from "../functions";
 import { deferReply, deferUpdate } from "../interaction";
 import { getSocial } from "../emojis";
-import { supportedSocials } from "../constants";
+import { CONSTANTS, supportedSocials } from "../constants";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 
 export const video = (getValue, env, context, request_data) => {
   const { guild_id, token } = request_data;
+  const bot_name = CONSTANTS.BOT.toLowerCase();
   const followUpRequest = async () => {
     let mensaje, emoji;
     let embeds = [], files = [], button = [], components = [];
@@ -53,7 +54,7 @@ export const video = (getValue, env, context, request_data) => {
         const maxSize = guild.premium_tier >= 3 ? 100000000 : (guild.premium_tier === 2 ? 50000000 : 25000000);
         if (fileSize > 100 && fileSize < maxSize) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
-          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2-chokis?video_url=${encodedScrappedUrl}`);
+          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2?video_url=${encodedScrappedUrl}&bot_name=${bot_name}`);
           const url_uploaded = await upload.text();
           const urlId = obtenerIDDesdeURL(url_uploaded);
           files.push({
