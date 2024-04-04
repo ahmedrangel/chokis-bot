@@ -7,7 +7,8 @@
     "worker:start": "wrangler dev",
     "worker:deploy": "wrangler deploy",
     "discord:register": "node src/register.js",
-    "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore ."
+    "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore .",
+    "tail": "wrangler tail"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240320.1",
