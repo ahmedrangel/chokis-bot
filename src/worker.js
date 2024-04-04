@@ -1,12 +1,12 @@
 /**
  * Cloudflare worker.
  */
-import { Router } from "itty-router";
+import { IttyRouter } from "itty-router";
 import { API } from "./lib/discord.js";
 import { commandsHandler } from "./handler.js";
 import { verifyKey } from "discord-interactions";
 
-const router = Router();
+const router = IttyRouter();
 
 router.get("/", (req, env) => {
   return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
@@ -56,6 +56,6 @@ export default {
         return new Response("Bad request signature.", { status: 401 });
       }
     }
-    return router.handle(request, env, context);
+    return router.fetch(request, env, context);
   },
 };
