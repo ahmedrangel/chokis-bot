@@ -53,7 +53,7 @@ export const video = (getValue, env, context, request_data) => {
         const maxSize = guild.premium_tier >= 3 ? 100000000 : (guild.premium_tier === 2 ? 50000000 : 25000000);
         if (fileSize > 100 && fileSize < maxSize) {
           const encodedScrappedUrl = encodeURIComponent(url_scrapped);
-          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put-r2?video_url=${encodedScrappedUrl}&bot_name=${CONSTANTS.BOT}`);
+          const upload = await fetch(`${env.EXT_WORKER_AHMED}/put/video?url=${encodedScrappedUrl}&bot_name=${CONSTANTS.BOT}`);
           const url_uploaded = await upload.text();
           const urlId = obtenerIDDesdeURL(url_uploaded);
           files.push({
