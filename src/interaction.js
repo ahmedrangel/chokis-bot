@@ -73,12 +73,12 @@ const pong = () => {
 
 export const create = (type, options, func) => {
   switch (type) {
-  case InteractionType.PING:
-    return pong();
-  case InteractionType.APPLICATION_COMMAND:
-    return func({
-      getValue: (name) => getFrom(name, options)
-    });
+    case InteractionType.PING:
+      return pong();
+    case InteractionType.APPLICATION_COMMAND:
+      return func({
+        getValue: (name) => getFrom(name, options)
+      });
   }
 };
 

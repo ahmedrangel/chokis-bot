@@ -22,4 +22,4 @@ export const subs = (env, context, token) => {
 
   context.waitUntil(followUpRequest());
   return deferReply();
-}
+};

@@ -126,12 +126,12 @@ export const lolProfile = (getValue, env, context, token) => {
     } else {
       let errorName;
       switch(profile.errorName) {
-      case "riotId":
-        errorName = "No se ha encontrado el **Riot ID**.";
-        break;
-      case "region":
-        errorName= "La **región** ingresada es incorrecta.";
-        break;
+        case "riotId":
+          errorName = "No se ha encontrado el **Riot ID**.";
+          break;
+        case "region":
+          errorName= "La **región** ingresada es incorrecta.";
+          break;
       }
       embeds.push({
         color: COLOR,

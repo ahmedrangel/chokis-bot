@@ -49,11 +49,11 @@ export const lolMaestrias = (getValue, env, context, token) => {
     } else {
       let errorStr = "";
       switch (masteriesData?.errorName) {
-      case "riotId":
-        errorStr = "No se ha encontrado el **Riot ID**.";
-        break;
-      case "mastery":
-        errorStr = "No se ha podido obtener las **maestrías** de este invocador.";
+        case "riotId":
+          errorStr = "No se ha encontrado el **Riot ID**.";
+          break;
+        case "mastery":
+          errorStr = "No se ha podido obtener las **maestrías** de este invocador.";
       }
       embeds.push({
         color: COLOR,

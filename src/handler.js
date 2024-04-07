@@ -18,40 +18,40 @@ export const commandsHandler = async (req, env, context) => {
     return create(request_data.type);
   } else if (request_data.type === InteractionType.MESSAGE_COMPONENT) {
     switch (custom_id) {
-    case COMP.PARTICIPAR.custom_id: return ic.participar(env, context, request_data);
-    default: return error("Unknown Type", 400);
+      case COMP.PARTICIPAR.custom_id: return ic.participar(env, context, request_data);
+      default: return error("Unknown Type", 400);
     }
   } else {
     console.log("/" + name);
     return create(type, options, async ({ getValue = (name) => name }) => {
       switch (name) {
       // comando /memide
-      case C.ME_MIDE.name: return cmd.meMide(member);
-      // Comando /mecabe
-      case C.ME_CABE.name: return cmd.meCabe(member);
-      // comando /comandos
-      case C.COMANDOS.name: return cmd.comandos(C);
-      // comando /lolprofile
-      case C.LOLPROFILE.name: return cmd.lolProfile(getValue, env, context, token);
-      // comando /lolmmr
-      case C.LOLMMR.name: return cmd.lolMMR(getValue, env, context, token);
-      // comando /lolgame
-      case C.LOLGAME.name: return cmd.lolGame(getValue, env, context, token);
-      // comando /lolmaestrias
-      case C.LOLMASTERY.name: return cmd.lolMaestrias(getValue, env, context, token);
-      // comando /video
-      case C.VIDEO.name: return cmd.video(getValue, env, context, request_data);
-      // comando /audio
-      case C.AUDIO.name: return cmd.audio(getValue, env, context, token);
-      // comando /sorteo
-      case C.SORTEO.name: return cmd.sorteo(env, context, request_data);
-      // comando /participar (en sorteo)
-      // case C.PARTICIPAR.name: return cmd.participar(env, context, request_data);
-      // comando /cheer
-      case C.CHEER.name: return cmd.cheer(getValue, env, context, request_data);
-      // comando /subs
-      case C.SUBS.name: return cmd.subs(env, context, token);
-      default: return error("Unknown Type", 400);
+        case C.ME_MIDE.name: return cmd.meMide(member);
+          // Comando /mecabe
+        case C.ME_CABE.name: return cmd.meCabe(member);
+          // comando /comandos
+        case C.COMANDOS.name: return cmd.comandos(C);
+          // comando /lolprofile
+        case C.LOLPROFILE.name: return cmd.lolProfile(getValue, env, context, token);
+          // comando /lolmmr
+        case C.LOLMMR.name: return cmd.lolMMR(getValue, env, context, token);
+          // comando /lolgame
+        case C.LOLGAME.name: return cmd.lolGame(getValue, env, context, token);
+          // comando /lolmaestrias
+        case C.LOLMASTERY.name: return cmd.lolMaestrias(getValue, env, context, token);
+          // comando /video
+        case C.VIDEO.name: return cmd.video(getValue, env, context, request_data);
+          // comando /audio
+        case C.AUDIO.name: return cmd.audio(getValue, env, context, token);
+          // comando /sorteo
+        case C.SORTEO.name: return cmd.sorteo(env, context, request_data);
+          // comando /participar (en sorteo)
+          // case C.PARTICIPAR.name: return cmd.participar(env, context, request_data);
+          // comando /cheer
+        case C.CHEER.name: return cmd.cheer(getValue, env, context, request_data);
+          // comando /subs
+        case C.SUBS.name: return cmd.subs(env, context, token);
+        default: return error("Unknown Type", 400);
       }
     });
   }

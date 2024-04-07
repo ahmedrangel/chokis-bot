@@ -44,61 +44,61 @@ const leagueEmblems = {
 
 export const getLolSpell = (number) => {
   switch (number) {
-  case 1:
-    return summonerspells.cleanse;
-  case 3:
-    return summonerspells.exhaust;
-  case 4:
-    return summonerspells.flash;
-  case 6:
-    return summonerspells.ghost;
-  case 7:
-    return summonerspells.heal;
-  case 11:
-    return summonerspells.smite;
-  case 12:
-    return summonerspells.teleport;
-  case 13:
-    return summonerspells.clarity;
-  case 14:
-    return summonerspells.ignite;
-  case 21:
-    return summonerspells.barrier;
-  case 32:
-    return summonerspells.mark;
-  case 2202:
-    return summonerspells.flash;
-  case 2201:
-    return summonerspells.flee;
-  default:
-    return "";
+    case 1:
+      return summonerspells.cleanse;
+    case 3:
+      return summonerspells.exhaust;
+    case 4:
+      return summonerspells.flash;
+    case 6:
+      return summonerspells.ghost;
+    case 7:
+      return summonerspells.heal;
+    case 11:
+      return summonerspells.smite;
+    case 12:
+      return summonerspells.teleport;
+    case 13:
+      return summonerspells.clarity;
+    case 14:
+      return summonerspells.ignite;
+    case 21:
+      return summonerspells.barrier;
+    case 32:
+      return summonerspells.mark;
+    case 2202:
+      return summonerspells.flash;
+    case 2201:
+      return summonerspells.flee;
+    default:
+      return "";
   }
 };
 
 export const getLeagueEmblem = (league) => {
   switch (league?.toLowerCase()) {
-  case "hierro":
-    return leagueEmblems.iron;
-  case "bronce":
-    return leagueEmblems.bronce;
-  case "plata":
-    return leagueEmblems.silver;
-  case "oro":
-    return leagueEmblems.gold;
-  case "platino":
-    return leagueEmblems.platinum;
-  case "esmeralda":
-    return leagueEmblems.emerald;
-  case "diamante":
-    return leagueEmblems.diamond;
-  case "maestro":
-    return leagueEmblems.master;
-  case "gran maestro":
-    return leagueEmblems.grandmaster;
-  case "retador":
-    return leagueEmblems.challenger;
-  default:
-    return leagueEmblems.unranked;
+    case "hierro":
+      return leagueEmblems.iron;
+    case "bronce":
+      return leagueEmblems.bronce;
+    case "plata":
+      return leagueEmblems.silver;
+    case "oro":
+      return leagueEmblems.gold;
+    case "platino":
+      return leagueEmblems.platinum;
+    case "esmeralda":
+      return leagueEmblems.emerald;
+    case "diamante":
+      return leagueEmblems.diamond;
+    case "maestro":
+      return leagueEmblems.master;
+    case "gran maestro":
+      return leagueEmblems.grandmaster;
+    case "retador":
+      return leagueEmblems.challenger;
+    default:
+      return leagueEmblems.unranked;
   }
 };
 
