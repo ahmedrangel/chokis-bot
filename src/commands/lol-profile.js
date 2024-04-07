@@ -19,9 +19,9 @@ export const lolProfile = (getValue, env, context, token) => {
       });
     }
     const embeds = [];
-    let components = [];
-    let button = [];
-    let mensaje = "";
+    const components = [];
+    const button = [];
+    const mensaje = "";
     let remake, footer, titleName;
 
     const profileF = await fetch(`${env.EXT_WORKER_AHMED}/lol/profile/${region}/${riotName}/${riotTag}`);
@@ -29,7 +29,8 @@ export const lolProfile = (getValue, env, context, token) => {
     if (profile.status_code !== 404) {
       if (profile.titleName !== "") {
         titleName = `*${profile.titleName}*`;
-      } else {
+      }
+      else {
         titleName = "";
       }
       let queue = "";
@@ -43,9 +44,11 @@ export const lolProfile = (getValue, env, context, token) => {
       profile.rankProfile.forEach((rank) => {
         if (rank.queueType == "RANKED_SOLO_5x5") {
           queue = "Solo/Duo";
-        } else if (rank.queueType == "RANKED_FLEX_SR") {
+        }
+        else if (rank.queueType == "RANKED_FLEX_SR") {
           queue = "Flexible";
-        } else if (rank.queueType == "RANKED_TFT_DOUBLE_UP") {
+        }
+        else if (rank.queueType == "RANKED_TFT_DOUBLE_UP") {
           queue = "TFT Dúo Dinámico";
         }
         const winrate = Math.round((rank.wins/(rank.wins + rank.losses))*100);
@@ -53,7 +56,8 @@ export const lolProfile = (getValue, env, context, token) => {
         let rankNumber;
         if (rank.tier == "MAESTRO" || rank.tier == "GRAN MAESTRO" || rank.tier == "RETADOR") {
           rankNumber = "";
-        } else {
+        }
+        else {
           rankNumber = rank.rank;
         }
         fields.push({
@@ -68,7 +72,8 @@ export const lolProfile = (getValue, env, context, token) => {
         if (match.remake) {
           resultado = "⬜";
           remake = true;
-        } else {
+        }
+        else {
           resultado = match.win ? "🟦" : "🟥";
         }
         const championName = match.championName.replaceAll(" ", "");
@@ -88,7 +93,8 @@ export const lolProfile = (getValue, env, context, token) => {
       });
       if (remake) {
         footer = "🟦 = victoriaㅤ🟥 = derrotaㅤ⬜ = remake";
-      } else {
+      }
+      else {
         footer = "🟦 = victoriaㅤ🟥 = derrota";
       }
       embeds.push({
@@ -123,7 +129,8 @@ export const lolProfile = (getValue, env, context, token) => {
         type: MessageComponentTypes.ACTION_ROW,
         components: button
       });
-    } else {
+    }
+    else {
       let errorName;
       switch(profile.errorName) {
         case "riotId":

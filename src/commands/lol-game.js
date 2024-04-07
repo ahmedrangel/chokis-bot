@@ -28,7 +28,7 @@ export const lolGame = (getValue, env, context, token) => {
       });
     }
     const embeds = [], components = [], button = [], fields = [], team1 = [], team2 = [];
-    let mensaje = "";
+    const mensaje = "";
     const gameFetch = await fetch(`${env.EXT_WORKER_AHMED}/lol/spectator/${region}/${riotName}/${riotTag}`);
     const gameData = await gameFetch.json();
     if (gameData.status_code === 200) {
@@ -75,7 +75,8 @@ export const lolGame = (getValue, env, context, token) => {
         type: MessageComponentTypes.ACTION_ROW,
         components: button
       });
-    } else {
+    }
+    else {
       embeds.push({
         color: COLOR,
         description: ":x: Error. No se ha encontrado una partida activa",

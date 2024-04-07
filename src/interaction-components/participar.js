@@ -25,7 +25,8 @@ export const participar = (env, context, request_data) => {
             console.log("avatar uploaded");
             break;
           }
-        } catch (e) {
+        }
+        catch (e) {
           console.log(e);
         }
       }
@@ -41,10 +42,12 @@ export const participar = (env, context, request_data) => {
         embeds: embedsEdit,
         message_id: message.id
       });
-    } else if (selectGuilds?.activeGiveaway && selectGiveaways) {
+    }
+    else if (selectGuilds?.activeGiveaway && selectGiveaways) {
       title = "⚠️ Ya estás participando en el sorteo";
       description = "Espera que el moderador anuncie el ganador.";
-    } else {
+    }
+    else {
       description = "❌ No hay ningún sorteo activo para participar.";
     }
     const embeds = [{ color: COLOR, title: title, description: description }];

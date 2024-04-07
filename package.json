@@ -21,6 +21,7 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "eslint": "^9.0.0",
-    "itty-router": "^5.0.9"
+    "itty-router": "^5.0.9",
+    "typescript-eslint": "^7.5.0"
   }
 }

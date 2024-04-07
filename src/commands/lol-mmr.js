@@ -19,7 +19,7 @@ export const lolMMR = (getValue, env, context, token) => {
       });
     }
     const embeds = [];
-    let mensaje = "";
+    const mensaje = "";
     let footer;
     const profileF = await fetch(`${env.EXT_WORKER_AHMED}/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
     const profile = await profileF.json();
@@ -55,7 +55,8 @@ export const lolMMR = (getValue, env, context, token) => {
           icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
         }
       });
-    } else {
+    }
+    else {
       let errorName;
       switch(profile?.errorName) {
         case "riotId":

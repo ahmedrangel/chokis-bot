@@ -16,12 +16,14 @@ export const commandsHandler = async (req, env, context) => {
      */
     console.log("Handling Ping request");
     return create(request_data.type);
-  } else if (request_data.type === InteractionType.MESSAGE_COMPONENT) {
+  }
+  else if (request_data.type === InteractionType.MESSAGE_COMPONENT) {
     switch (custom_id) {
       case COMP.PARTICIPAR.custom_id: return ic.participar(env, context, request_data);
       default: return error("Unknown Type", 400);
     }
-  } else {
+  }
+  else {
     console.log("/" + name);
     return create(type, options, async ({ getValue = (name) => name }) => {
       switch (name) {

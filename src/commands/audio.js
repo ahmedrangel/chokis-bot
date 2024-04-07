@@ -6,7 +6,7 @@ export const audio = (getValue, env, context, token) => {
   const followUpRequest = async () => {
     let mensaje = "";
     let embeds = [];
-    let files = [];
+    const files = [];
     const url = getValue("link");
     if (url.includes("youtube.com/") || url.includes("youtu.be/")) {
       const encodedUrl = encodeURIComponent(url);
@@ -26,18 +26,22 @@ export const audio = (getValue, env, context, token) => {
               name: `${title}.mp3`,
               file: audioBlob
             });
-          } else {
+          }
+          else {
             const error = ":x: Error. El video de youtube es muy pesado o demasiado largo.";
             embeds = errorEmbed(error);
           }
-        } else {
+        }
+        else {
           embeds = errorEmbed(":x: Error. La duración del video debe ser menor de **10 minutos**");
         }
-      } else {
+      }
+      else {
         console.error("Error:", info.error);
         embeds = errorEmbed(":x: " + info.error);
       }
-    } else {
+    }
+    else {
       const error = ":x: Error. El texto ingresado no es un link válido de YouTube.";
       embeds = errorEmbed(error);
     }

@@ -5,7 +5,7 @@ import { InteractionResponseFlags } from "discord-interactions";
 const { COLOR, BOT } = CONSTANTS;
 
 export const comandos = (C) => {
-  let list = Object.values(C).flatMap((command) => {
+  const list = Object.values(C).flatMap((command) => {
     if (command.options[0]?.type == 1) {
       return command.options
         .map(el => {
@@ -13,7 +13,8 @@ export const comandos = (C) => {
           const desc = `${el.description}`;
           return `${cd} *${desc}*\n`;
         });
-    } else {
+    }
+    else {
       return [`-  </${command.name}:${command.cid}> *${command.description}*\n`];
     }
   });

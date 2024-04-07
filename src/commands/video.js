@@ -8,7 +8,8 @@ export const video = (getValue, env, context, request_data) => {
   const { guild_id, token } = request_data;
   const followUpRequest = async () => {
     let mensaje, emoji;
-    let embeds = [], files = [], button = [], components = [];
+    let embeds = [];
+    const files = [], button = [], components = [];
     let supported = false;
     let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch";
     const url = getValue("link");
@@ -71,18 +72,22 @@ export const video = (getValue, env, context, request_data) => {
             components: button
           });
           mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
-        } else if (retryCount === 3) {
+        }
+        else if (retryCount === 3) {
           const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
           embeds = errorEmbed(error);
-        } else {
+        }
+        else {
           const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
           embeds = errorEmbed(error);
         }
-      } else {
+      }
+      else {
         const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
         embeds = errorEmbed(error);
       }
-    } else {
+    }
+    else {
       const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
       embeds = errorEmbed(error);
     }

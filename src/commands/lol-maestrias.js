@@ -18,7 +18,7 @@ export const lolMaestrias = (getValue, env, context, token) => {
       });
     }
     const embeds = [], fields = [], masteries = [];
-    let mensaje = "";
+    const mensaje = "";
     const masteriesF = await fetch(`${env.EXT_WORKER_AHMED}/lol/masteries/${region}/${riotName}/${riotTag}`);
     const masteriesData = await masteriesF.json();
     if (masteriesData.status_code !== 404) {
@@ -46,7 +46,8 @@ export const lolMaestrias = (getValue, env, context, token) => {
           text: "maestría - campeón - puntos - cofre - usado por última vez",
         }
       });
-    } else {
+    }
+    else {
       let errorStr = "";
       switch (masteriesData?.errorName) {
         case "riotId":
