@@ -9,3 +9,4 @@ export * from "./lol-mmr.js";
 export * from "./lol-game.js";
 export * from "./lol-maestrias.js";
 export * from "./cheer.js";
+export * from "./subs.js";

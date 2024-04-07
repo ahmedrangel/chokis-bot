@@ -49,6 +49,8 @@ export const commandsHandler = async (req, env, context) => {
       // case C.PARTICIPAR.name: return cmd.participar(env, context, request_data);
       // comando /cheer
       case C.CHEER.name: return cmd.cheer(getValue, env, context, request_data);
+      // comando /subs
+      case C.SUBS.name: return cmd.subs(env, context, token);
       default: return error("Unknown Type", 400);
       }
     });

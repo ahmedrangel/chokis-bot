@@ -187,6 +187,13 @@ export const CHEER = {
   ]
 };
 
+export const SUBS = {
+  cid: "",
+  name: "subs",
+  description: "Obtener la cantidad de suscriptores de ChinoLoleroo",
+  options: []
+};
+
 /*
 export const TEST = {
   name: "test",
