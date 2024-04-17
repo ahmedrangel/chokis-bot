@@ -1,5 +1,5 @@
 import { CommandType, PermissionFlags } from "./lib/discord.js";
-import { LOL_SERVERS } from "./constants.js";
+import { LOL_QUEUES, LOL_SERVERS } from "./constants.js";
 export const ME_MIDE = {
   cid: "1151073208997531673",
   name: "memide",
@@ -38,6 +38,13 @@ export const LOLPROFILE = {
       "type": CommandType.STRING,
       "required": true,
       "choices": LOL_SERVERS
+    },
+    {
+      "name": "filtro",
+      "description": "Filtrar por una cola específica.",
+      "type": CommandType.STRING,
+      "required": false,
+      "choices": LOL_QUEUES
     }
   ]
 };

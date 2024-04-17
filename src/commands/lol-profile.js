@@ -8,6 +8,7 @@ export const lolProfile = (getValue, env, context, token) => {
   const followUpRequest = async () => {
     const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
     const region = getValue("servidor");
+    const filter = getValue("filtro");
     const riotName = riotId[0];
     const riotTag = riotId[1];
     if (!riotTag || !riotName) {
@@ -24,7 +25,7 @@ export const lolProfile = (getValue, env, context, token) => {
     const mensaje = "";
     let remake, footer, titleName;
 
-    const profileF = await fetch(`${env.EXT_WORKER_AHMED}/lol/profile/${region}/${riotName}/${riotTag}`);
+    const profileF = await fetch(`${env.EXT_WORKER_AHMED}/lol/profile/${region}/${riotName}/${riotTag}?filter=${filter}`);
     const profile = await profileF.json();
     if (profile.status_code !== 404) {
       if (profile.titleName !== "") {
