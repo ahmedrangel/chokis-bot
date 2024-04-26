@@ -5,8 +5,8 @@ import { CONSTANTS, supportedSocials } from "../constants";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 
 export const video = (getValue, env, context, request_data) => {
-  const { guild_id, token } = request_data;
   const followUpRequest = async () => {
+    const { guild_id, token } = request_data;
     let mensaje, emoji;
     let embeds = [];
     const files = [], button = [], components = [];

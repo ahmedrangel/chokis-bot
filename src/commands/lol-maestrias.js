@@ -35,7 +35,7 @@ export const lolMaestrias = (getValue, env, context, token) => {
       embeds.push({
         type: "rich",
         title: masteriesData.region.toUpperCase(),
-        description: `**Puntuación Total:** ${masteriesData.score}`,
+        description: `## **Puntuación:** ${masteriesData.score}`,
         color: COLOR,
         fields: [...fields],
         author: {
