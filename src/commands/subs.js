@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants";
 import { getSocial } from "../emojis";
 const { COLOR } = CONSTANTS;
 
-export const subs = (env, context, token) => {
+export const subs = async (env, context, token) => {
   const followUpRequest = async () => {
     const response = await fetch(`${env.EXT_WORKER_AHMED}/twitch/subscribers/chinololeroo/total`);
     const { total } = await response.json();
@@ -13,13 +13,13 @@ export const subs = (env, context, token) => {
       description: `${twitch} **ChinoLoleroo** tiene **${total}** suscriptores.`
     }];
 
-    return deferUpdate("", {
+    return await deferUpdate("", {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
       embeds,
     });
   };
 
-  context.waitUntil(followUpRequest());
-  return deferReply();
+  await context.waitUntil(followUpRequest());
+  return await deferReply();
 };

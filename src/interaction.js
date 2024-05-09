@@ -52,7 +52,7 @@ class JsonFileRequest extends Request {
   }
 }
 
-const toDiscord = (body, init) => {
+const toDiscord = async (body, init) => {
   return new JsonResponse(body, init);
 };
 
@@ -94,8 +94,8 @@ export const reply = (content, options) => {
   });
 };
 
-export const deferReply = (options) => {
-  return toDiscord({
+export const deferReply = async (options) => {
+  return await toDiscord({
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       flags: options?.flags
@@ -103,10 +103,10 @@ export const deferReply = (options) => {
   });
 };
 
-export const deferUpdate = (content, options) => {
+export const deferUpdate = async (content, options) => {
   const { token, application_id } = options;
   const followup_endpoint = `/webhooks/${application_id}/${token}`;
-  return toDiscordEndpoint(followup_endpoint, {
+  return await toDiscordEndpoint(followup_endpoint, {
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
     content: content,
     embeds: options?.embeds,
@@ -123,10 +123,10 @@ export const getOriginalMessage = async (options) => {
   return message;
 };
 
-export const editMessage = (content, options) => {
+export const editMessage = async (content, options) => {
   const { token, channel_id, message_id } = options;
   const endpoint = `/channels/${channel_id}/messages/${message_id}`;
-  return toDiscordEndpoint(endpoint, {
+  return await toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
@@ -135,10 +135,10 @@ export const editMessage = (content, options) => {
   }, "PATCH", "Bot " + token);
 };
 
-export const editFollowUpMessage = (content, options) => {
+export const editFollowUpMessage = async (content, options) => {
   const { token, application_id, message_id } = options;
   const endpoint = `/webhooks/${application_id}/${token}/messages/${message_id}`;
-  return toDiscordEndpoint(endpoint, {
+  return await toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
