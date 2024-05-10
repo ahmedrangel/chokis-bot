@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants.js";
 import { InteractionResponseFlags } from "discord-interactions";
 import { PARTICIPAR } from "../components.js";
 const { COLOR } = CONSTANTS;
-export const participar = async (env, context, request_data) => {
+export const participar = (env, context, request_data) => {
   const { member, guild_id, token, message } = request_data;
   const pId = member.user.id;
   const pName = member.user.username;
@@ -51,12 +51,12 @@ export const participar = async (env, context, request_data) => {
       description = "❌ No hay ningún sorteo activo para participar.";
     }
     const embeds = [{ color: COLOR, title: title, description: description }];
-    return await deferUpdate("", {
+    return deferUpdate("", {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
       embeds,
     });
   };
   context.waitUntil(followUpRequest());
-  return await deferReply({flags: InteractionResponseFlags.EPHEMERAL});
+  return deferReply({flags: InteractionResponseFlags.EPHEMERAL});
 };

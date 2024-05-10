@@ -52,7 +52,7 @@ class JsonFileRequest extends Request {
   }
 }
 
-const toDiscord = async (body, init) => {
+const toDiscord = (body, init) => {
   return new JsonResponse(body, init);
 };
 
@@ -94,8 +94,8 @@ export const reply = (content, options) => {
   });
 };
 
-export const deferReply = async (options) => {
-  return await toDiscord({
+export const deferReply = (options) => {
+  return toDiscord({
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       flags: options?.flags
@@ -103,10 +103,10 @@ export const deferReply = async (options) => {
   });
 };
 
-export const deferUpdate = async (content, options) => {
+export const deferUpdate = (content, options) => {
   const { token, application_id } = options;
   const followup_endpoint = `/webhooks/${application_id}/${token}`;
-  return await toDiscordEndpoint(followup_endpoint, {
+  return toDiscordEndpoint(followup_endpoint, {
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
     content: content,
     embeds: options?.embeds,
@@ -123,10 +123,10 @@ export const getOriginalMessage = async (options) => {
   return message;
 };
 
-export const editMessage = async (content, options) => {
+export const editMessage = (content, options) => {
   const { token, channel_id, message_id } = options;
   const endpoint = `/channels/${channel_id}/messages/${message_id}`;
-  return await toDiscordEndpoint(endpoint, {
+  return toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
@@ -135,10 +135,10 @@ export const editMessage = async (content, options) => {
   }, "PATCH", "Bot " + token);
 };
 
-export const editFollowUpMessage = async (content, options) => {
+export const editFollowUpMessage = (content, options) => {
   const { token, application_id, message_id } = options;
   const endpoint = `/webhooks/${application_id}/${token}/messages/${message_id}`;
-  return await toDiscordEndpoint(endpoint, {
+  return toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,

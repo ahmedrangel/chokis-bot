@@ -4,7 +4,7 @@ import { getSocial } from "../emojis";
 import { CONSTANTS, supportedSocials } from "../constants";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 
-export const video = async (getValue, env, context, request_data) => {
+export const video = (getValue, env, context, request_data) => {
   const followUpRequest = async () => {
     const { guild_id, token } = request_data;
     let mensaje, emoji;
@@ -92,7 +92,7 @@ export const video = async (getValue, env, context, request_data) => {
       embeds = errorEmbed(error);
     }
     // Return del refer
-    return await deferUpdate(mensaje, {
+    return deferUpdate(mensaje, {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
       embeds,
@@ -100,6 +100,6 @@ export const video = async (getValue, env, context, request_data) => {
       files
     });
   };
-  await context.waitUntil(followUpRequest());
-  return await deferReply();
+  context.waitUntil(followUpRequest());
+  return deferReply();
 };
