@@ -56,13 +56,13 @@ const toDiscord = (body, init) => {
   return new JsonResponse(body, init);
 };
 
-const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
+const toDiscordEndpoint = (endpoint, body, method, authorization) => {
   const endpoint_url = `${API.BASE}${endpoint}`;
   if (!body.files) {
-    return await fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
+    return fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
   }
   else {
-    return await fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
+    return fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
   }
 };
 
