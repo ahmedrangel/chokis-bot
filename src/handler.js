@@ -42,7 +42,7 @@ export const commandsHandler = async (req, env, context) => {
           // comando /lolmaestrias
         case C.LOLMASTERY.name: return await cmd.lolMaestrias(getValue, env, context, token);
           // comando /video
-        case C.VIDEO.name: return await cmd.video(getValue, env, context, request_data);
+        case C.VIDEO.name: return await await cmd.video(getValue, env, context, request_data);
           // comando /audio
         case C.AUDIO.name: return await cmd.audio(getValue, env, context, token);
           // comando /sorteo
