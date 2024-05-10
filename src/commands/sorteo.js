@@ -5,7 +5,7 @@ import { getUpdatedAvatarUrl, getRandom, fetchUsers } from "../functions.js";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 const { COLOR } = CONSTANTS;
 
-export const sorteo = (env, context, request_data) => {
+export const sorteo = async (env, context, request_data) => {
   const { guild_id, token, data } = request_data;
   const option = data.options[0];
   const followUpRequest = async () => {
@@ -34,7 +34,7 @@ export const sorteo = (env, context, request_data) => {
         if (select?.msgIdGiveaway && select?.channelIdGiveaway) {
           for (const btn of button) { btn.disabled = true; }
           const componentsEdit = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
-          editMessage("", {
+          await editMessage("", {
             message_id: select?.msgIdGiveaway,
             channel_id: select?.channelIdGiveaway,
             components: componentsEdit,
@@ -59,7 +59,7 @@ export const sorteo = (env, context, request_data) => {
       const embeds = [{ color: COLOR, title: title, description: description }];
       for (const btn of button) { btn.disabled = false; }
       const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
-      return deferUpdate("", {
+      return await deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
         embeds,
@@ -77,7 +77,7 @@ export const sorteo = (env, context, request_data) => {
             btn.disabled = true;
         }
         const components = [{ type: MessageComponentTypes.ACTION_ROW, components: button }];
-        editMessage("", {
+        await editMessage("", {
           message_id: select.msgIdGiveaway,
           channel_id: select.channelIdGiveaway,
           components,
@@ -89,7 +89,7 @@ export const sorteo = (env, context, request_data) => {
         description = "⚠️ No hay ningun sorteo activo.";
       }
       const embeds = [{ color: COLOR, title: title, description: description }];
-      return deferUpdate("", {
+      return await deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
         embeds
@@ -133,13 +133,13 @@ export const sorteo = (env, context, request_data) => {
           url: avatarUrl,
         }
       }];
-      return deferUpdate("", {
+      return await deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
         embeds
       });
     }
   };
-  context.waitUntil(followUpRequest());
-  return deferReply();
+  await context.waitUntil(followUpRequest());
+  return await deferReply();
 };
