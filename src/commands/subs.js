@@ -13,7 +13,7 @@ export const subs = (env, context, token) => {
       description: `${twitch} **ChinoLoleroo** tiene **${total}** suscriptores.`
     }];
 
-    return deferUpdate("", {
+    return deferUpdate(null, {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
       embeds,

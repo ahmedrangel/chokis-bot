@@ -34,7 +34,12 @@ router.get("/giveaways/participants/:guildId", async (req, env) => {
 
 // Commands Handler
 router.post("/", async (req, env, context) => {
-  return await commandsHandler(req, env, context);
+  try {
+    return await commandsHandler(req, env, context);
+  }
+  catch (error) {
+    console.log(error);
+  }
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
