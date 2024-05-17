@@ -8,7 +8,9 @@ import { InteractionType } from "discord-interactions";
 export const commandsHandler = async (req, env, context) => {
   const request_data = await req.json();
   const { type, data, member, token } = request_data;
-  const { name, options, custom_id } = data;
+  const name = data?.name;
+  const options = data?.options;
+  const custom_id = data?.custom_id;
   if (request_data.type === InteractionType.PING) {
     /**
      * The `PING` message is used during the initial webhook handshake, and is
