@@ -19,7 +19,6 @@ class JsonResponse extends Response {
 
 class JsonRequest extends Request {
   constructor(url, body, init, authorization) {
-    console.log(body);
     const options = {
       ...init,
       headers: {
@@ -36,7 +35,6 @@ class JsonFileRequest extends Request {
   constructor(url, body, init) {
     const formData = new FormData();
     const { files } = body;
-    console.log(body);
     if (files) {
       files.forEach((file, i) => {
         formData.append(`files[${i}]`, file.file, file.name);
@@ -56,13 +54,13 @@ const toDiscord = (body, init) => {
   return new JsonResponse(body, init);
 };
 
-const toDiscordEndpoint = (endpoint, body, method, authorization) => {
+const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
   const endpoint_url = `${API.BASE}${endpoint}`;
   if (!body.files) {
-    return fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
+    return await fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
   }
   else {
-    return fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
+    return await fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
   }
 };
 
@@ -103,16 +101,19 @@ export const deferReply = (options) => {
   });
 };
 
-export const deferUpdate = (content, options) => {
+export const deferUpdate = async (content, options) => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
   const { token, application_id } = options;
   const followup_endpoint = `/webhooks/${application_id}/${token}`;
-  return toDiscordEndpoint(followup_endpoint, {
+  const response = await toDiscordEndpoint(followup_endpoint, {
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
     content: content,
     embeds: options?.embeds,
     components: options?.components,
     files: options?.files,
   }, "POST");
+  console.log(await response.json());
+  return response;
 };
 
 export const getOriginalMessage = async (options) => {

@@ -27,7 +27,7 @@ export const commandsHandler = async (req, env, context) => {
   }
   else {
     console.log("/" + name);
-    return create(type, options, async ({ getValue = (name) => name }) => {
+    return create(type, options, ({ getValue = (name) => name }) => {
       switch (name) {
       // comando /memide
         case C.ME_MIDE.name: return cmd.meMide(member);
