@@ -43,7 +43,7 @@ export const supportedSocials = {
     name: "Facebook"
   },
   youtube: {
-    domains: ["youtube.com/shorts", "youtu.be/", "youtube.com/watch?v="],
+    domains: ["youtube.com/shorts", "youtu.be/", "youtube.com/watch?v=", "youtube.com/live"],
     name: "YouTube"
   },
   twitch: {
