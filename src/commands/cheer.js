@@ -5,10 +5,13 @@ import { hash } from "ohash";
 const { COLOR } = CONSTANTS;
 
 export const cheer = async (getValue, env, context, request_data) => {
-  const { member, token } = request_data;
+  const { member, user, token } = request_data;
   const mensaje = getValue("mensaje").replace(/(<([^>]+)>)/gi, "").trim();
+  const user_id = member ? member.user.id : user.id;
+  const username = member ? member.user.username : user.username;
+  const user_avatar = member ? member.user.avatar : user.avatar;
 
-  if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
+  if (mensaje.length > 500) return reply(`<@${user_id}> El mensaje no puede tener más de 500 caracteres.`);
 
   const followUpRequest = async () => {
     const VOZ = "Miguel";
@@ -22,8 +25,8 @@ export const cheer = async (getValue, env, context, request_data) => {
         description: `\`${mensaje}\``,
         color: COLOR,
         author: {
-          name: member.user.username,
-          icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
+          name: username,
+          icon_url: `https://cdn.discordapp.com/avatars/${user_id}/${user_avatar}.png`
         },
         thumbnail: {
           //url: getEmojiURL("angarG2")

@@ -78,3 +78,16 @@ export const hasPermission = (permission, flag) => {
 export const isAdmin = (member) => {
   return hasPermission(member.permissions, PermissionFlags.ADMINISTRATOR);
 };
+
+export const IntegrationTypes = {
+  GUILD_INSTALL: 0,
+  USER_INSTALL: 1,
+  ALL: [0, 1]
+};
+
+export const Contexts = {
+  GUILD: 0,
+  BOT_DM: 1,
+  PRIVATE_CHANNEL: 2,
+  ALL: [0, 1, 2]
+};

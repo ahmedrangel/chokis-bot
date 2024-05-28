@@ -7,7 +7,7 @@ import { InteractionType } from "discord-interactions";
 
 export const commandsHandler = async (req, env, context) => {
   const request_data = await req.json();
-  const { type, data, member, token } = request_data;
+  const { type, data, member, user, token } = request_data;
   const name = data?.name;
   const options = data?.options;
   const custom_id = data?.custom_id;
@@ -30,9 +30,9 @@ export const commandsHandler = async (req, env, context) => {
     return create(type, options, ({ getValue = (name) => name }) => {
       switch (name) {
       // comando /memide
-        case C.ME_MIDE.name: return cmd.meMide(member);
+        case C.ME_MIDE.name: return cmd.meMide(member?.user || user);
           // Comando /mecabe
-        case C.ME_CABE.name: return cmd.meCabe(member);
+        case C.ME_CABE.name: return cmd.meCabe(member?.user || user);
           // comando /comandos
         case C.COMANDOS.name: return cmd.comandos(C);
           // comando /lolprofile

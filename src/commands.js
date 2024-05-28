@@ -1,9 +1,11 @@
-import { CommandType, PermissionFlags } from "./lib/discord.js";
+import { CommandType, Contexts, IntegrationTypes, PermissionFlags } from "./lib/discord.js";
 import { LOL_QUEUES, LOL_SERVERS } from "./constants.js";
 export const ME_MIDE = {
   cid: "1151073208997531673",
   name: "memide",
   description: "Conocer cuántos centímetros te mide.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: []
 };
 
@@ -11,6 +13,8 @@ export const ME_CABE = {
   cid: "1151073208997531672",
   name: "mecabe",
   description: "Conocer cuántos centímetros te caben.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: []
 };
 
@@ -25,6 +29,8 @@ export const LOLPROFILE = {
   cid: "1151083208264388628",
   name: "lolperfil",
   description: "Consulta información de un usuario de League of Legends",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "riot_id",
@@ -53,6 +59,8 @@ export const VIDEO = {
   cid: "1151073208997531674",
   name: "video",
   description: "Obtener un video de Instagram, Facebook, TikTok, Twitter, YouTube o Clip de Twitch en formato MP4.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "link",
@@ -67,6 +75,8 @@ export const AUDIO = {
   cid: "1151073208997531668",
   name: "audio",
   description: "Obtener un audio de YouTube en formato MP3.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "link",
@@ -81,6 +91,8 @@ export const LOLMMR = {
   cid: "1152746647172948038",
   name: "lolmmr",
   description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "riot_id",
@@ -118,6 +130,8 @@ export const LOLGAME = {
   cid: "1155113801109225542",
   name: "lolgame",
   description: "Obtener información de una partida activa de League of Legends.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "riot_id",
@@ -184,6 +198,8 @@ export const CHEER = {
   cid: "1212916341942648882",
   name: "cheer",
   description: "Has una prueba de tus mensajes antes de enviar bits en el canal de Chino.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "mensaje",
@@ -198,6 +214,8 @@ export const SUBS = {
   cid: "1234963826945032233",
   name: "subs",
   description: "Obtener la cantidad de suscriptores de ChinoLoleroo",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: []
 };
 
