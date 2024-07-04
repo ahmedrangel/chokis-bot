@@ -42,7 +42,7 @@ export const video = (getValue, env, context, request_data) => {
           return {blob: blob, fileSize: fileSize, caption: imbedUrlsFromString(caption)};
         };
         let {blob, fileSize, caption} = await fetchScraped();
-        while (fileSize < 100 && retryCount < 3) {
+        while (fileSize < 100 && retryCount <= 3) {
           console.log("El tamaño del archivo es 0. Volviendo a intentar...");
           await new Promise(resolve => setTimeout(resolve, 1000));
           ({ blob, fileSize, caption } = await fetchScraped());
