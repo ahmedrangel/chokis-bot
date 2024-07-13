@@ -51,7 +51,7 @@ export default {
       const signature = headers.get("x-signature-ed25519");
       const timestamp = headers.get("x-signature-timestamp");
       const body = await request.clone().arrayBuffer();
-      const isValidRequest = verifyKey(
+      const isValidRequest = await verifyKey(
         body,
         signature,
         timestamp,
