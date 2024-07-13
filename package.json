@@ -7,7 +7,7 @@
     "worker:start": "wrangler dev",
     "worker:deploy": "wrangler deploy",
     "discord:register": "node src/register.js",
-    "lint": "eslint . --fix",
+    "lint": "eslint --fix --config .config/eslint.mjs",
     "tail": "wrangler tail"
   },
   "devDependencies": {
