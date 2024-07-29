@@ -8,7 +8,8 @@
     "worker:deploy": "wrangler deploy",
     "discord:register": "node src/register.js",
     "lint": "eslint --fix --config .config/eslint.mjs",
-    "tail": "wrangler tail"
+    "tail": "wrangler tail",
+    "discord:picture": "node src/updatePicture.js"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240712.0",
