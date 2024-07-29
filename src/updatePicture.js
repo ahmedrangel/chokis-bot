@@ -1,4 +1,6 @@
 import "dotenv/config";
+import { API } from "./lib/discord.js";
+
 const args = process.argv.slice(2);
 const argsObj = {};
 
@@ -24,7 +26,7 @@ const execute = async () => {
 
   const payload = argsObj.type === "avatar" ? { avatar: `data:${contentType};base64,${imageData}` } : { banner: `data:${contentType};base64,${imageData}` };
 
-  const patch = await fetch("https://discord.com/api/v10/users/@me", {
+  const patch = await fetch(`${API.BASE}/users/@me`, {
     method: "PATCH",
     headers: {
       "Authorization": "Bot " + process.env.DISCORD_TOKEN,
