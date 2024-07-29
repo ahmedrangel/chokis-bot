@@ -59,6 +59,7 @@ export const video = (getValue, env, context, request_data) => {
     const fileSize = blob?.size;
     console.log("Tamaño: " + fileSize);
     const contentType = videoChecker?.headers.get("content-type");
+    console.log("Content-Type: " + contentType);
 
     const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
     console.log("premium tier: " + guild.premium_tier);
@@ -73,7 +74,7 @@ export const video = (getValue, env, context, request_data) => {
       });
     }
 
-    if (!blob || fileSize < 100 || !contentType.includes("video")) {
+    if (!blob || fileSize < 100 || !["video/mp4", "binary/octet-stream"].includes(contentType)) {
       const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
       return deferUpdate("", {
         token,
