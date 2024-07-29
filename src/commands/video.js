@@ -13,7 +13,7 @@ export const video = (getValue, env, context, request_data) => {
     const files = [], button = [], components = [];
     let emoji;
     let supported = false;
-    let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch";
+    let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch / Kick";
     const url = getValue("link");
 
     for (const key in supportedSocials) {

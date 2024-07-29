@@ -49,6 +49,10 @@ export const supportedSocials = {
   twitch: {
     domains: ["clips.twitch.tv/", "twitch.tv/"],
     name: "Twitch"
+  },
+  kick: {
+    domains: ["kick.com/"],
+    name: "Kick"
   }
 };
 

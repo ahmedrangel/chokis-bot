@@ -109,7 +109,8 @@ const socials = {
   facebook: "<:facebook:1135326667158585434>",
   twitter: "<:xcom:1135473765443186708>",
   youtube: "<:youtube:1140938633369628703>",
-  twitch: "<:twitch:1167239427987361822>"
+  twitch: "<:twitch:1167239427987361822>",
+  kick: "<:kick:1267449535668555788>"
 };
 
 export const getSocial = (name) => {
