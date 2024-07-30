@@ -104,9 +104,10 @@ export const video = (getValue, env, context, request_data) => {
     });
 
     const mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
+    const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
 
     // Return del refer
-    return deferUpdate(mensaje, {
+    return deferUpdate(fixedMsg, {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
       embeds,
