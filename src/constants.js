@@ -27,7 +27,7 @@ export const LOL_SERVERS = [
 
 export const supportedSocials = {
   instagram: {
-    domains: ["instagram.com/p/", "instagram.com/reel/", "instagram.com/reels/", "instagram.com/stories"],
+    domains: ["instagram.com/p/", "instagram.com/reel/", "instagram.com/reels/", "instagram.com/stories", "instagram.com/"],
     name: "Instagram"
   },
   tiktok: {
