@@ -42,7 +42,7 @@ export const video = (getValue, env, context, request_data) => {
     const video_url = scrapping?.video_url;
     const short_url = scrapping?.short_url;
     const status = scrapping?.status;
-    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g,"").trim() : ""}`);
+    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/\n+/g, "\n").trim() : ""}`);
     console.log(status);
 
     if (status !== 200 && !esUrl(video_url)) {
