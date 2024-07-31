@@ -33,24 +33,24 @@ export const LOLPROFILE = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "riot_id",
-      "description": "Riot ID. Ej: (Name#TAG).",
-      "type": CommandType.STRING,
-      "required": true
+      name: "riot_id",
+      description: "Riot ID. Ej: (Name#TAG).",
+      type: CommandType.STRING,
+      required: true
     },
     {
-      "name": "servidor",
-      "description": "El servidor donde juega.",
-      "type": CommandType.STRING,
-      "required": true,
-      "choices": LOL_SERVERS
+      name: "servidor",
+      description: "El servidor donde juega.",
+      type: CommandType.STRING,
+      required: true,
+      choices: LOL_SERVERS
     },
     {
-      "name": "filtro",
-      "description": "Filtrar por una cola específica.",
-      "type": CommandType.STRING,
-      "required": false,
-      "choices": LOL_QUEUES
+      name: "filtro",
+      description: "Filtrar por una cola específica.",
+      type: CommandType.STRING,
+      required: false,
+      choices: LOL_QUEUES
     }
   ]
 };
@@ -63,10 +63,10 @@ export const VIDEO = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "link",
-      "description": "Link de Instagram, Facebook, TikTok, Twitter, YouTube, Twitch o Kick.",
-      "type": CommandType.STRING,
-      "required": true
+      name: "link",
+      description: "Link de Instagram, Facebook, TikTok, Twitter, YouTube, Twitch o Kick.",
+      type: CommandType.STRING,
+      required: true
     }
   ]
 };
@@ -79,10 +79,10 @@ export const AUDIO = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "link",
-      "description": "Link de YouTube.",
-      "type": CommandType.STRING,
-      "required": true
+      name: "link",
+      description: "Link de YouTube.",
+      type: CommandType.STRING,
+      required: true
     }
   ]
 };
@@ -95,31 +95,31 @@ export const LOLMMR = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "riot_id",
-      "description": "Riot ID. Ej: (Name#TAG).",
-      "type": CommandType.STRING,
-      "required": true
+      name: "riot_id",
+      description: "Riot ID. Ej: (Name#TAG).",
+      type: CommandType.STRING,
+      required: true
     },
     {
-      "name": "servidor",
-      "description": "El servidor del invocador",
-      "type": CommandType.STRING,
-      "required": true,
-      "choices": LOL_SERVERS
+      name: "servidor",
+      description: "El servidor del invocador",
+      type: CommandType.STRING,
+      required: true,
+      choices: LOL_SERVERS
     },
     {
-      "name": "cola",
-      "description": "Tipo de cola clasificatoria",
-      "type": CommandType.STRING,
-      "required": true,
-      "choices": [
+      name: "cola",
+      description: "Tipo de cola clasificatoria",
+      type: CommandType.STRING,
+      required: true,
+      choices: [
         {
-          "name": "Solo/Duo",
-          "value": "SoloQ"
+          name: "Solo/Duo",
+          value: "SoloQ"
         },
         {
-          "name": "Flexible",
-          "value": "Flex"
+          name: "Flexible",
+          value: "Flex"
         }
       ]
     }
@@ -134,17 +134,17 @@ export const LOLGAME = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "riot_id",
-      "description": "Riot ID. Ej: (Name#TAG).",
-      "type": CommandType.STRING,
-      "required": true
+      name: "riot_id",
+      description: "Riot ID. Ej: (Name#TAG).",
+      type: CommandType.STRING,
+      required: true
     },
     {
-      "name": "servidor",
-      "description": "El servidor del invocador",
-      "type": CommandType.STRING,
-      "required": true,
-      "choices": LOL_SERVERS
+      name: "servidor",
+      description: "El servidor del invocador",
+      type: CommandType.STRING,
+      required: true,
+      choices: LOL_SERVERS
     }
   ]
 };
@@ -155,17 +155,17 @@ export const LOLMASTERY = {
   description: "Obtener las maestrías de campeones de un invocador.",
   options: [
     {
-      "name": "riot_id",
-      "description": "Riot ID. Ej: (Name#TAG).",
-      "type": CommandType.STRING,
-      "required": true
+      name: "riot_id",
+      description: "Riot ID. Ej: (Name#TAG).",
+      type: CommandType.STRING,
+      required: true
     },
     {
-      "name": "servidor",
-      "description": "El servidor del invocador",
-      "type": CommandType.STRING,
-      "required": true,
-      "choices": LOL_SERVERS
+      name: "servidor",
+      description: "El servidor del invocador",
+      type: CommandType.STRING,
+      required: true,
+      choices: LOL_SERVERS
     }
   ]
 };
@@ -176,20 +176,20 @@ export const SORTEO = {
   description: "Administrar sorteos.",
   options: [
     {
-      "name": "nuevo",
-      "description": "Abre un nuevo sorteo.",
-      "type": CommandType.SUB_COMMAND,
+      name: "nuevo",
+      description: "Abre un nuevo sorteo.",
+      type: CommandType.SUB_COMMAND
     },
     {
-      "name": "cerrar",
-      "description": "Cierra las entradas al sorteo.",
-      "type": CommandType.SUB_COMMAND,
+      name: "cerrar",
+      description: "Cierra las entradas al sorteo.",
+      type: CommandType.SUB_COMMAND
     },
     {
-      "name": "sacar",
-      "description": "Saca un ganador aleatorio del sorteo.",
-      "type": CommandType.SUB_COMMAND,
-    },
+      name: "sacar",
+      description: "Saca un ganador aleatorio del sorteo.",
+      type: CommandType.SUB_COMMAND
+    }
   ],
   default_member_permissions: PermissionFlags.ADMINISTRATOR
 };
@@ -202,10 +202,10 @@ export const CHEER = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "mensaje",
-      "description": "El mensaje que quieres que lea el bot.",
-      "type": CommandType.STRING,
-      "required": true
+      name: "mensaje",
+      description: "El mensaje que quieres que lea el bot.",
+      type: CommandType.STRING,
+      required: true
     }
   ]
 };

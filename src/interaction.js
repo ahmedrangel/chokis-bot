@@ -6,7 +6,7 @@ import { getFrom } from "./functions.js";
 import { InteractionResponseType, InteractionType } from "discord-interactions";
 
 class JsonResponse extends Response {
-  constructor(body, init) {
+  constructor (body, init) {
     const jsonBody = JSON.stringify(body);
     const options = init || {
       headers: {
@@ -18,7 +18,7 @@ class JsonResponse extends Response {
 }
 
 class JsonRequest extends Request {
-  constructor(url, body, init, authorization) {
+  constructor (url, body, init, authorization) {
     const options = {
       ...init,
       headers: {
@@ -32,7 +32,7 @@ class JsonRequest extends Request {
 }
 
 class JsonFileRequest extends Request {
-  constructor(url, body, init) {
+  constructor (url, body, init) {
     const formData = new FormData();
     const { files } = body;
     if (files) {
@@ -66,7 +66,7 @@ const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
 
 const pong = () => {
   return toDiscord({
-    type: InteractionResponseType.PONG,
+    type: InteractionResponseType.PONG
   });
 };
 
@@ -87,8 +87,8 @@ export const reply = (content, options) => {
     data: {
       content: content,
       embeds: options?.embeds,
-      flags: options?.flags,
-    },
+      flags: options?.flags
+    }
   });
 };
 
@@ -110,7 +110,7 @@ export const deferUpdate = async (content, options) => {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
-    files: options?.files,
+    files: options?.files
   }, "POST");
   console.log(await response.json());
   return response;

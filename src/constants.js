@@ -8,21 +8,21 @@ export const CONSTANTS = {
 };
 
 export const LOL_SERVERS = [
-  { "name": "LAN", "value": "LAN" },
-  { "name": "LAS", "value": "LAS" },
-  { "name": "NA", "value": "NA" },
-  { "name": "BR", "value": "BR" },
-  { "name": "EUW", "value": "EUW" },
-  { "name": "EUNE", "value": "EUNE" },
-  { "name": "KR", "value": "KR" },
-  { "name": "RU", "value": "RU" },
-  { "name": "TR", "value": "TR" },
-  { "name": "JP", "value": "JP" },
-  { "name": "OCE", "value": "OCE" },
-  { "name": "PH", "value": "PH" },
-  { "name": "TW", "value": "TW" },
-  { "name": "VN", "value": "VN" },
-  { "name": "TH", "value": "TH" }
+  { name: "LAN", value: "LAN" },
+  { name: "LAS", value: "LAS" },
+  { name: "NA", value: "NA" },
+  { name: "BR", value: "BR" },
+  { name: "EUW", value: "EUW" },
+  { name: "EUNE", value: "EUNE" },
+  { name: "KR", value: "KR" },
+  { name: "RU", value: "RU" },
+  { name: "TR", value: "TR" },
+  { name: "JP", value: "JP" },
+  { name: "OCE", value: "OCE" },
+  { name: "PH", value: "PH" },
+  { name: "TW", value: "TW" },
+  { name: "VN", value: "VN" },
+  { name: "TH", value: "TH" }
 ];
 
 export const supportedSocials = {
@@ -57,10 +57,10 @@ export const supportedSocials = {
 };
 
 export const LOL_QUEUES = [
-  { "name": "Todos", "value": "all" },
-  { "name": "Solo/Duo", "value": "soloq" },
-  { "name": "Flex", "value": "flex" },
-  { "name": "Normal", "value": "normal" },
-  { "name": "ARAM", "value": "aram" },
-  { "name": "Quickplay", "value": "quickplay" },
+  { name: "Todos", value: "all" },
+  { name: "Solo/Duo", value: "soloq" },
+  { name: "Flex", value: "flex" },
+  { name: "Normal", value: "normal" },
+  { name: "ARAM", value: "aram" },
+  { name: "Quickplay", value: "quickplay" }
 ];

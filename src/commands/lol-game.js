@@ -20,10 +20,11 @@ export const lolGame = (getValue, env, context, token) => {
     const riotName = riotId[0];
     const riotTag = riotId[1];
     if (!riotTag || !riotName) {
-      return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+      return deferUpdate("", { token,
+        application_id: env.DISCORD_APPLICATION_ID,
         embeds: [{
           color: COLOR,
-          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
         }]
       });
     }
@@ -55,7 +56,7 @@ export const lolGame = (getValue, env, context, token) => {
         type: "rich",
         description: `**${gameData.gameType}**・**${gameData.region}**・🕓 *${gameDuration}*`,
         color: COLOR,
-        fields: [...fields],
+        fields: [...fields]
       });
       button.push(
         {
@@ -79,7 +80,7 @@ export const lolGame = (getValue, env, context, token) => {
     else {
       embeds.push({
         color: COLOR,
-        description: ":x: Error. No se ha encontrado una partida activa",
+        description: ":x: Error. No se ha encontrado una partida activa"
       });
     }
     return deferUpdate(mensaje, {

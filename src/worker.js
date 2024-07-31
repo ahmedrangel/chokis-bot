@@ -17,7 +17,7 @@ router.get("/giveaways/participants/:guildId", async (req, env) => {
   const data = await env.CHOKISDB.prepare(`SELECT * FROM giveaways WHERE guildId = '${guildId}'`).all();
   const guildPreview = await fetch(`${API.BASE}/guilds/${guildId}/preview`, {
     headers: {
-      "Authorization" : "Bot " + env.DISCORD_TOKEN
+      Authorization: "Bot " + env.DISCORD_TOKEN
     }
   });
   const guildData = await guildPreview.json();
@@ -45,7 +45,7 @@ router.post("/", async (req, env, context) => {
 router.all("*", () => new Response("Not Found.", { status: 404 }));
 
 export default {
-  async fetch(request, env, context) {
+  async fetch (request, env, context) {
     const { method, headers } = request;
     if (method === "POST") {
       const signature = headers.get("x-signature-ed25519");
@@ -62,5 +62,5 @@ export default {
       }
     }
     return router.fetch(request, env, context);
-  },
+  }
 };

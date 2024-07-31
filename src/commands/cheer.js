@@ -21,7 +21,7 @@ export const cheer = async (getValue, env, context, request_data) => {
     const files = [{ name: `${hash(text)}.mp3`, file: blob }];
 
     return deferUpdate("", {
-      embeds : [{
+      embeds: [{
         description: `\`${mensaje}\``,
         color: COLOR,
         author: {
@@ -32,7 +32,7 @@ export const cheer = async (getValue, env, context, request_data) => {
           //url: getEmojiURL("angarG2")
         },
         footer: {
-          text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
+          text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`
           // icon_url: bits[getRandom({min: 0, max: bits.length - 1})]
         }
       }],

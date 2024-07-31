@@ -10,10 +10,11 @@ export const lolMaestrias = (getValue, env, context, token) => {
     const riotName = riotId[0];
     const riotTag = riotId[1];
     if (!riotTag || !riotName) {
-      return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+      return deferUpdate("", { token,
+        application_id: env.DISCORD_APPLICATION_ID,
         embeds: [{
           color: COLOR,
-          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
         }]
       });
     }
@@ -39,11 +40,11 @@ export const lolMaestrias = (getValue, env, context, token) => {
         color: COLOR,
         fields: [...fields],
         author: {
-          name:`${masteriesData.riotName} #${masteriesData.riotTag}`,
+          name: `${masteriesData.riotName} #${masteriesData.riotTag}`,
           icon_url: masteriesData.profileIconUrl
         },
         footer: {
-          text: "maestría - campeón - puntos - cofre - usado por última vez",
+          text: "maestría - campeón - puntos - cofre - usado por última vez"
         }
       });
     }
@@ -58,7 +59,7 @@ export const lolMaestrias = (getValue, env, context, token) => {
       }
       embeds.push({
         color: COLOR,
-        description: ":x:" + errorStr,
+        description: ":x:" + errorStr
       });
     }
     return deferUpdate(mensaje, {

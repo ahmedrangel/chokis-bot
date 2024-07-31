@@ -54,9 +54,9 @@ export const participar = (env, context, request_data) => {
     return deferUpdate("", {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
-      embeds,
+      embeds
     });
   };
   context.waitUntil(followUpRequest());
-  return deferReply({flags: InteractionResponseFlags.EPHEMERAL});
+  return deferReply({ flags: InteractionResponseFlags.EPHEMERAL });
 };

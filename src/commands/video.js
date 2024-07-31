@@ -31,7 +31,7 @@ export const video = (getValue, env, context, request_data) => {
       return deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
-        embeds: errorEmbed(error),
+        embeds: errorEmbed(error)
       });
     }
 
@@ -50,7 +50,7 @@ export const video = (getValue, env, context, request_data) => {
       return deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
-        embeds: errorEmbed(error),
+        embeds: errorEmbed(error)
       });
     }
 
@@ -70,7 +70,7 @@ export const video = (getValue, env, context, request_data) => {
       return deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
-        embeds: errorEmbed(error),
+        embeds: errorEmbed(error)
       });
     }
 
@@ -79,7 +79,7 @@ export const video = (getValue, env, context, request_data) => {
       return deferUpdate("", {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
-        embeds: errorEmbed(error),
+        embeds: errorEmbed(error)
       });
     }
 

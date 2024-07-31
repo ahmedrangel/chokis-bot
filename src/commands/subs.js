@@ -16,7 +16,7 @@ export const subs = (env, context, token) => {
     return deferUpdate(null, {
       token,
       application_id: env.DISCORD_APPLICATION_ID,
-      embeds,
+      embeds
     });
   };
 

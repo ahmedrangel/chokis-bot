@@ -48,7 +48,7 @@ export const diasFaltantes = (año, mes, dia) => {
 export const fetchUsers = async (id, token) => {
   const response = await fetch(`${API.BASE}/users/${id}`, {
     headers: {
-      "Authorization": `Bot ${token}`
+      Authorization: `Bot ${token}`
     }
   });
   const data = await response.json();
@@ -59,7 +59,7 @@ export const errorEmbed = (error_msg) => {
   const embeds = [];
   embeds.push({
     color: COLOR,
-    description: error_msg,
+    description: error_msg
   });
   return embeds;
 };
@@ -110,7 +110,7 @@ export const getUpdatedAvatarUrl = async (userId, avatar, token) => {
 export const getGuild = async (id, token) => {
   const response = await fetch(`${API.BASE}/guilds/${id}`, {
     headers: {
-      "Authorization": `Bot ${token}`
+      Authorization: `Bot ${token}`
     }
   });
   const data = await response.json();

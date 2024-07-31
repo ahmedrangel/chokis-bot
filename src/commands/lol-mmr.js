@@ -11,10 +11,11 @@ export const lolMMR = (getValue, env, context, token) => {
     const riotName = riotId[0];
     const riotTag = riotId[1];
     if (!riotTag || !riotName) {
-      return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+      return deferUpdate("", { token,
+        application_id: env.DISCORD_APPLICATION_ID,
         embeds: [{
           color: COLOR,
-          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+          description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
         }]
       });
     }
@@ -43,7 +44,7 @@ export const lolMMR = (getValue, env, context, token) => {
           {
             name: `ELO MMR aproximado: ${avgTierEmoji} ${profile?.avg?.tier.toUpperCase()} ${profile?.avg?.rank}`,
             value: "",
-            inline: false,
+            inline: false
           }
         ],
         author: {
@@ -58,7 +59,7 @@ export const lolMMR = (getValue, env, context, token) => {
     }
     else {
       let errorName;
-      switch(profile?.errorName) {
+      switch (profile?.errorName) {
         case "riotId":
           errorName = "No se ha encontrado el **Riot ID**.";
           break;
@@ -71,7 +72,7 @@ export const lolMMR = (getValue, env, context, token) => {
       }
       embeds.push({
         color: COLOR,
-        description: `:x: Error. ${errorName}`,
+        description: `:x: Error. ${errorName}`
       });
     }
     console.log(embeds);

@@ -29,7 +29,7 @@ export const comandos = (C) => {
         icon_url: avatar
       },
       footer: {
-        text: "Creado por Ahmed",
+        text: "Creado por Ahmed"
       }
     }],
     flags: InteractionResponseFlags.EPHEMERAL

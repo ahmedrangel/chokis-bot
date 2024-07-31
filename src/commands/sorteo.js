@@ -112,13 +112,13 @@ export const sorteo = (env, context, request_data) => {
         description = `🪄 <@${winner.participantId}> (${winnerData.username}) ha salido como **ganador** del sorteo. **¡FELICIDADES!** 🎉`;
         await env.CHOKISDB.prepare(`UPDATE giveaways SET rolled = ${true} WHERE participantId = '${winner.participantId}' AND guildId = '${guild_id}'`).first();
       }
-      else if (select?.activeGiveaway && participants[0] && select?.msgIdGiveaway ) {
+      else if (select?.activeGiveaway && participants[0] && select?.msgIdGiveaway) {
         description = "⚠️ Cierra el sorteo activo primero antes de sacar un ganador.";
       }
-      else if (select?.activeGiveaway && !participants[0] && select?.msgIdGiveaway ) {
+      else if (select?.activeGiveaway && !participants[0] && select?.msgIdGiveaway) {
         description = "⚠️ Aún no hay participantes para escoger un ganador.";
       }
-      else if (!select?.activeGiveaway && !participants[0] && select?.msgIdGiveaway ) {
+      else if (!select?.activeGiveaway && !participants[0] && select?.msgIdGiveaway) {
         description = "⚠️ No hay más participantes para sacar.";
       }
       else {
@@ -130,7 +130,7 @@ export const sorteo = (env, context, request_data) => {
         title: title,
         description: description,
         image: {
-          url: avatarUrl,
+          url: avatarUrl
         }
       }];
       return deferUpdate("", {
