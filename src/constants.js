@@ -34,9 +34,9 @@ export const supportedSocials = {
     domains: ["tiktok.com/@", "vm.tiktok.com/", "m.tiktok.com/", "tiktok.com/t/"],
     name: "TikTok"
   },
-  twitter: {
+  x: {
     domains: ["twitter.com/", "x.com/"],
-    name: "Twitter"
+    name: "X"
   },
   facebook: {
     domains: ["facebook.com/", "fb.watch/", "fb.gg/"],
