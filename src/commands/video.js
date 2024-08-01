@@ -9,8 +9,7 @@ import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 export const video = (getValue, env, context, request_data) => {
   const followUpRequest = async () => {
     const { token } = request_data;
-    const embeds = [];
-    const button = [], components = [];
+    const embeds = [], button = [], components = [];
     let emoji;
     let supported = false;
     let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick";
