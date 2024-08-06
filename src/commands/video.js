@@ -38,10 +38,10 @@ export const video = (getValue, env, context, request_data) => {
     const scraperUrl = `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper`;
     const scraperQueries = { url: encodedUrl, filter: "video" };
     const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
-    const { id, video_url, short_url, status } = scrapping;
+    const { id, video_url, short_url, status } = scrapping || {};
     const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replaceAll(".\n", "").replace(/\n+/g, "\n").trim() : ""}`);
 
-    if (status !== 200 && !esUrl(video_url)) {
+    if (!scrapping || status !== 200 && !esUrl(video_url)) {
       const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
       return deferUpdate("", {
         token,
