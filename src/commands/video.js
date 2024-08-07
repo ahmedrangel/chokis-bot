@@ -107,8 +107,22 @@ export const video = (getValue, env, context, request_data) => {
       });
     }
 
-    const uploadedUrl = await $fetch(withQuery(`${env.EXT_WORKER_AHMED}/put/video`, { url: video_url, prefix: "videos", dir: red_social.toLowerCase(), file_id: id }));
-    return finalReply(uploadedUrl);
+    const uploadedUrl = await $fetch(`${env.EXT_WORKER_AHMED}/cdn`, {
+      method: "PUT",
+      headers: { "x-cdn-auth": `${env.CDN_TOKEN}` },
+      body: {
+        source: video_url,
+        prefix: `videos/${red_social.toLowerCase()}`,
+        file_name: `${id}.mp4`,
+        httpMetadata: {
+          "Content-Type": "video/mp4",
+          "Content-Disposition": "inline",
+          "Cache-Control": "public, max-age=432000"
+        }
+      }
+    });
+
+    return finalReply(uploadedUrl.url);
   };
   context.waitUntil(followUpRequest());
   return deferReply();
