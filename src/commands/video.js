@@ -75,7 +75,7 @@ export const video = (getValue, env, context, request_data) => {
     };
 
     const cdnUrl = `https://cdn.ahmedrangel.com/videos/${red_social.toLowerCase()}/${id}.mp4`;
-    const checkCdn = await $fetch.raw(cdnUrl).catch(() => null);
+    const checkCdn = await $fetch.raw(withQuery(cdnUrl, { t: Date.now() })).catch(() => null);
     if (checkCdn?.ok) {
       console.log("Existe en CDN");
       return finalReply(cdnUrl);
