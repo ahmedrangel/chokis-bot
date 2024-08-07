@@ -112,7 +112,6 @@ export const deferUpdate = async (content, options) => {
     components: options?.components,
     files: options?.files
   }, "POST");
-  console.log(await response.json());
   return response;
 };
 
