@@ -63,7 +63,7 @@ export const video = (getValue, env, context, request_data) => {
         components: button
       });
 
-      const mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](${withQuery(`${env.EXT_WORKER_AHMED}/dc/fx`, { video_url: downloadUrl, redirect_url: short_url })})\n${caption}`;
+      const mensaje = `[${emoji}](${withQuery(`${env.EXT_WORKER_AHMED}/dc/fx`, { video_url: downloadUrl, redirect_url: short_url })}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
 
       return deferUpdate(fixedMsg, {
