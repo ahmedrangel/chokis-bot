@@ -12,7 +12,7 @@ export const video = (getValue, env, context, request_data) => {
     const embeds = [], button = [], components = [];
     let emoji;
     let supported = false;
-    let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick";
+    let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick / Reddit";
     const url = getValue("link");
 
     for (const key in supportedSocials) {

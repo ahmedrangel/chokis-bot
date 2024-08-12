@@ -53,6 +53,10 @@ export const supportedSocials = {
   kick: {
     domains: ["kick.com/"],
     name: "Kick"
+  },
+  reddit: {
+    domains: ["reddit.com/r/", "reddit.com/user/", "reddit.com/u/"],
+    name: "Reddit"
   }
 };
 
