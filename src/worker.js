@@ -1,15 +1,20 @@
 /**
  * Cloudflare worker.
  */
-import { IttyRouter } from "itty-router";
+import { error, AutoRouter, text, cors } from "itty-router";
 import { API } from "./lib/discord.js";
 import { commandsHandler } from "./handler.js";
 import { verifyKey } from "discord-interactions";
 
-const router = IttyRouter();
+const { preflight, corsify } = cors();
+const router = AutoRouter({
+  before: [preflight],
+  catch: error,
+  finally: [corsify]
+});
 
 router.get("/", (req, env) => {
-  return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
+  return text(`👋 ${env.DISCORD_APPLICATION_ID}`);
 });
 
 router.get("/giveaways/participants/:guildId", async (req, env) => {
@@ -25,11 +30,7 @@ router.get("/giveaways/participants/:guildId", async (req, env) => {
     name: guildData?.name,
     icon: guildData?.icon
   };
-  const obj = {
-    list: data.results,
-    guild: guildResults
-  };
-  return new Response(JSON.stringify(obj));
+  return { list: data.results, guild: guildResults };
 });
 
 // Commands Handler
@@ -42,7 +43,7 @@ router.post("/", async (req, env, context) => {
   }
 });
 
-router.all("*", () => new Response("Not Found.", { status: 404 }));
+router.all("*", () => error(404));
 
 export default {
   async fetch (request, env, context) {

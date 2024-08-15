@@ -5,12 +5,12 @@ const { COLOR } = CONSTANTS;
 
 export const subs = (env, context, token) => {
   const followUpRequest = async () => {
-    const response = await fetch(`${env.EXT_WORKER_AHMED}/twitch/subscribers/chinololeroo/total`);
+    const response = await fetch(`${env.EXT_WORKER_AHMED}/twitch/subscribers/soychinno/total`);
     const { total } = await response.json();
     const twitch = getSocial("twitch");
     const embeds = [{
       color: COLOR,
-      description: `${twitch} **ChinoLoleroo** tiene **${total}** suscriptores.`
+      description: `${twitch} **SoyChinno** tiene **${total}** suscriptores.`
     }];
 
     return deferUpdate(null, {
