@@ -39,7 +39,7 @@ export const video = (getValue, env, context, request_data) => {
     const scraperQueries = { url: encodedUrl, filter: "video" };
     const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
     const { id, video_url, short_url, status } = scrapping || {};
-    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replaceAll(".\n", "").replace(/\n+/g, "\n").trim() : ""}`);
+    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/(#\w+|#[\u0600-\u06FF]+)/g, "").replace(/(\.\n|•\n)/g, "").replace(/\n+/g, "\n").trim() : ""}`);
 
     if (!scrapping || status !== 200 && !esUrl(video_url)) {
       const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
@@ -64,7 +64,7 @@ export const video = (getValue, env, context, request_data) => {
       });
 
       const mensaje = `[${emoji}](${withQuery(`${env.EXT_WORKER_AHMED}/dc/fx`, { video_url: downloadUrl, redirect_url: short_url })}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
-      const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
+      const fixedMsg = mensaje.length > 500 ? mensaje.substring(0, 500) + "..." : mensaje;
 
       return deferUpdate(fixedMsg, {
         token,
