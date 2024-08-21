@@ -12,7 +12,9 @@ const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
     return $fetch(endpoint_url, {
       method,
       body,
-      headers: authorization ? { Authorization: authorization } : {}
+      headers: authorization ? { Authorization: authorization } : {},
+      retry: 3,
+      retryDelay: 500
     }).catch(() => null);
   }
 
@@ -26,7 +28,9 @@ const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
   return $fetch(endpoint_url, {
     method,
     body: formData,
-    headers: authorization ? { Authorization: authorization } : {}
+    headers: authorization ? { Authorization: authorization } : {},
+    retry: 3,
+    retryDelay: 500
   }).catch(() => null);
 };
 
@@ -66,7 +70,6 @@ export const deferReply = (options) => {
 };
 
 export const deferUpdate = async (content, options) => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
   const { token, application_id } = options;
   const followup_endpoint = `/webhooks/${application_id}/${token}`;
   return await toDiscordEndpoint(followup_endpoint, {
