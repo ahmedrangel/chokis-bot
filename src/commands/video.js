@@ -1,7 +1,7 @@
 import { errorEmbed, esUrl, getGuild, imbedUrlsFromString, obtenerIDDesdeURL } from "../functions";
 import { deferReply, deferUpdate } from "../interaction";
 import { getSocial } from "../emojis";
-import { CONSTANTS, supportedSocials } from "../constants";
+import { supportedSocials } from "../constants";
 import { $fetch } from "ofetch";
 import { withQuery } from "ufo";
 import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
@@ -34,7 +34,7 @@ export const video = (getValue, env, context, request_data) => {
       });
     }
 
-    const encodedUrl = encodeURIComponent(url);
+    const encodedUrl = encodeURIComponent(url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`);
     const scraperUrl = `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper`;
     const scraperQueries = { url: encodedUrl, filter: "video" };
     const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
@@ -50,7 +50,7 @@ export const video = (getValue, env, context, request_data) => {
       });
     }
 
-    const finalReply = (downloadUrl) => {
+    const finalReply = async (downloadUrl) => {
       button.push({
         type: MessageComponentTypes.BUTTON,
         style: ButtonStyleTypes.LINK,
@@ -66,7 +66,7 @@ export const video = (getValue, env, context, request_data) => {
       const mensaje = `[${emoji}](${withQuery(`${env.EXT_WORKER_AHMED}/dc/fx`, { video_url: downloadUrl, redirect_url: short_url })}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 500 ? mensaje.substring(0, 500) + "..." : mensaje;
 
-      return deferUpdate(fixedMsg, {
+      return await deferUpdate(fixedMsg, {
         token,
         application_id: env.DISCORD_APPLICATION_ID,
         embeds,
