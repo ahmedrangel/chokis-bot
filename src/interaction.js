@@ -13,9 +13,10 @@ const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
       method,
       body,
       headers: authorization ? { Authorization: authorization } : {},
-      retry: 3,
-      retryDelay: 500
-    }).catch(() => null);
+      retry: 1,
+      retryDelay: 1000,
+      retryStatusCodes: [404]
+    });
   }
 
   const formData = new FormData();
@@ -29,9 +30,10 @@ const toDiscordEndpoint = async (endpoint, body, method, authorization) => {
     method,
     body: formData,
     headers: authorization ? { Authorization: authorization } : {},
-    retry: 3,
-    retryDelay: 500
-  }).catch(() => null);
+    retry: 1,
+    retryDelay: 1000,
+    retryStatusCodes: [404]
+  });
 };
 
 const pong = () => {
@@ -72,7 +74,7 @@ export const deferReply = (options) => {
 export const deferUpdate = async (content, options) => {
   const { token, application_id } = options;
   const followup_endpoint = `/webhooks/${application_id}/${token}`;
-  return await toDiscordEndpoint(followup_endpoint, {
+  return toDiscordEndpoint(followup_endpoint, {
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
     content: content,
     embeds: options?.embeds,
@@ -90,7 +92,7 @@ export const getOriginalMessage = async (options) => {
 export const editMessage = async (content, options) => {
   const { token, channel_id, message_id } = options;
   const endpoint = `/channels/${channel_id}/messages/${message_id}`;
-  return await toDiscordEndpoint(endpoint, {
+  return toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
@@ -102,7 +104,7 @@ export const editMessage = async (content, options) => {
 export const editFollowUpMessage = async (content, options) => {
   const { token, application_id, message_id } = options;
   const endpoint = `/webhooks/${application_id}/${token}/messages/${message_id}`;
-  return await toDiscordEndpoint(endpoint, {
+  return toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
@@ -118,7 +120,7 @@ export const error = (message, code) => {
 export const sendToChannel = async (content, options) => {
   const { channelId, token } = options;
   const endpoint = (`/channels/${channelId}/messages`);
-  return await toDiscordEndpoint(endpoint, {
+  return toDiscordEndpoint(endpoint, {
     content: content,
     embeds: options?.embeds,
     components: options?.components,
