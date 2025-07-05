@@ -35,7 +35,7 @@ export const video = (getValue, env, context, request_data) => {
     }
 
     const encodedUrl = encodeURIComponent(url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`);
-    const scraperUrl = `${env.EXT_WORKER_AHMED}/dc/${red_social.toLowerCase()}-video-scrapper`;
+    const scraperUrl = `${env.EXT_WORKER_AHMED}/dc/video-scraper/${red_social?.toLowerCase()}`;
     const scraperQueries = { url: encodedUrl, filter: "video" };
     const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
     const { id, video_url, short_url, status } = scrapping || {};
